@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap");
+.mainContent {
+  width: 82%;
+  height: 100%;
+  padding: 2rem;
+  overflow: auto;
+}
+
+:root {
+  --PrimaryColor: hsl(94, 59%, 35%);
+  --HoverColor: #bdf094;
+  --paleGreen: hsl(96, 75%, 89%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(0, 0%, 18%);
+  --textColor: hsl(240, 1%, 48%);
+  --bgColor: hsl(220, 10%, 94%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: hsl(330, 12%, 97%);
+  --itemCardColor: hsl(120, 5%, 88%);
+  --itemCardHover: hsl(120, 27%, 87%);
+  /*Font  and Typography*/
+  --biggestFontSize: 2.5rem;
+  --h1FontSize: 1.5rem;
+  --h2FontSize: 1.25rem;
+  --h3FontSize: 1rem;
+  --normalFontSize: .938rem;
+  --smallFontSize: .913rem;
+  --smallestFontSize: .75rem;
+}
+
+.mainContent {
+  width: 82%;
+  height: 100%;
+  padding: 2rem;
+  overflow: auto;
+}
+
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+.top button {
+  border: none;
+  padding: 1rem 2rem;
+  background: var(--PrimaryColor);
+  color: var(--whiteColor);
+  border-radius: 5px;
+  gap: 1rem;
+  box-shadow: 0 2px 4px var(--inputColor);
+  border: 1px solid transparent;
+}
+.top button:hover {
+  background: var(--paleGreen);
+  color: var(--blackColor);
+  border: 1px solid var(--PrimaryColor);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.icon2 {
+  font-size: var(--biggestFontSize);
+  background: var(--whiteColor);
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 4px var(--inputColor);
+  color: var(--PrimaryColor);
+}
+.icon2:hover {
+  background: var(--paleGreen);
+  border: 1px solid var(--PrimaryColor);
+}
+
+.header_fixed {
+  max-height: 100vh;
+  width: 100%;
+  overflow: auto;
+  border: 1px solid #dddddd;
+  margin-top: 1rem;
+}
+
+.header_fixed thead th {
+  position: sticky;
+  top: 0;
+  background-color: black;
+  color: #e6e7e8;
+  font-size: 15px;
+}
+
+th,
+td {
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+td img {
+  width: 40px;
+  height: 40px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px var(--itemCardColor);
+  margin-right: 1rem;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+tr:nth-child(odd) {
+  background-color: #edeef1;
+}
+
+tr:hover td {
+  color: #44b478;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+td button {
+  border: none;
+  gap: 1;
+  border-radius: 20px;
+}
+
+td {
+  text-align: center;
+}
+
+.searchBar {
+  padding: 1rem 2rem;
+  background: var(--whiteColor);
+  border-radius: 5px;
+  gap: 1rem;
+  box-shadow: 0 2px 4px var(--inputColor);
+  width: 250px;
+}
+.searchBar input {
+  border: none;
+  outline: none;
+  background: none;
+}
+.searchBar .icon {
+  color: var(--textColor);
+}
+.searchBar .icon:hover {
+  color: var(--PrimaryColor);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}/*# sourceMappingURL=users.css.map */
