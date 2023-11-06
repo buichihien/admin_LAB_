@@ -72,7 +72,7 @@ const SideBar = () => {
                     </li>
 
                     <li className="listItem">
-                        <Link to="#" className='menuLink flex'>
+                        <Link to="/room" className='menuLink flex'>
                             <SiGoogleclassroom className="icon" />
                             <span className="smallText">
                                 Book a classroom

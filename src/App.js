@@ -8,7 +8,8 @@ import SideBar from "./Components/SideBar Section/SideBar";
 import Body from "./Components/Body Section/Body";
 import Users from "./Components/Users Section/Users";
 import NewUser from "./Components/New User/NewUser";
-
+import Room from "./Components/Room Section/Room";
+import BookingRoom from "./Components/BookingRoom/BookingRoom";
 
 const App = () => {
     const { currentUser } = useContext(AuthContext);
@@ -33,6 +34,14 @@ const App = () => {
                         <Route
                             path="/NewUser"
                             element={<NewUser />}
+                        />
+                        <Route
+                            path="/room"
+                            element={<Room />}
+                        />
+                        <Route
+                            path="/bookingRoom"
+                            element={<BookingRoom />}
                         />
                     </Routes>
                 </div>

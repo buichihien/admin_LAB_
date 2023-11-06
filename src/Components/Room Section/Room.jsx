@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./users.css";
+import "./room.css";
 import { FcSearch } from "react-icons/fc";
 import { BiSolidCommentEdit } from "react-icons/bi";
 import { RiChatDeleteFill } from "react-icons/ri";
@@ -10,9 +10,8 @@ import { db } from "../../firebase";
 const Users = () => {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
-    const value = collection(db, "Users")
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, "Users"), (snapshot) => {
+        const unsub = onSnapshot(collection(db, "Room"), (snapshot) => {
             let list = [];
             snapshot.docs.forEach((doc) => {
                 list.push({ id: doc.id, ...doc.data() });
@@ -29,7 +28,7 @@ const Users = () => {
     }, [])
 
     const handleDelete = async (id) => {
-        const deleteVal = doc(db, "Users", id)
+        const deleteVal = doc(db, "Room", id)
         await deleteDoc(deleteVal)
     }
 
@@ -40,7 +39,7 @@ const Users = () => {
                     <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)}/>
                     <FcSearch className="icon" />
                 </div>
-                <div><button><Link to="/NewUser">Add User</Link></button></div>
+                <div><button><Link to="/bookingRoom">Add Book</Link></button></div>
             </div>
 
             <div className="header_fixed">
@@ -48,10 +47,11 @@ const Users = () => {
                     <thead>
                         <tr>
                             <th>S No.</th>
-                            <th>Image</th>
-                            <th>Username</th>
-                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Class</th>
                             <th>Phone</th>
+                            <th>DateBooking</th>
+                            <th>TimeBooking</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -64,10 +64,11 @@ const Users = () => {
                             return (
                                 <tr key={data.id}>
                                     <td>{index+1}</td>
-                                    <td><img src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
                                     <td>{data.username}</td>
-                                    <td>{data.email}</td>
+                                    <td>{data.class}</td>
                                     <td>{data.phone}</td>
+                                    <td>{data.date}</td>
+                                    <td>{data.time}</td>
                                     <td>
                                         <button><BiSolidCommentEdit className="icon2" /></button>
                                         <span>   </span>
