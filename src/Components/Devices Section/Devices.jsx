@@ -11,7 +11,7 @@ const Devices = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, "Devices"), (snapshot) => {
+        const unsub = onSnapshot(collection(db, "Device"), (snapshot) => {
             let list = [];
             snapshot.docs.forEach((doc) => {
                 list.push({ id: doc.id, ...doc.data() });

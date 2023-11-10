@@ -61,20 +61,20 @@ export const Room = [
     },
     {
         type: "text",
-        label: "Password",
-        id: "password",
-        placeholder: "Jane123@"
-    },
-    {
-        type: "email",
-        label: "Email",
-        id: "email",
-        placeholder: "jane@mail.com"
+        label: "Class",
+        id: "class",
+        placeholder: "20CT111"
     },
     {
         type: "text",
-        label: "State",
-        id: "state",
-        placeholder: ""
+        label: "MaSV",
+        id: "MaSV",
+        placeholder: "120000300"
+    },
+    {
+        type: "text",
+        label: "Phone",
+        id: "phone",
+        placeholder: "(319) 555-0115"
     },
 ]
