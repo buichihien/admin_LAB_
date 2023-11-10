@@ -20,22 +20,22 @@ const BookingRoom = () => {
         return newDate;
     };
 
-    useEffect(() => {
-        const unsub = onSnapshot(collection(db, "Room"), (snapshot) => {
-            let list = [];
-            snapshot.docs.forEach((doc) => {
-                list.push({ id: doc.id, ...doc.data() });
-            });
-            setData(list);
-        },
-            (err) => {
-                console.log(err);
-            }
-        );
-        return () => {
-            unsub();
-        };
-    }, [])
+    // useEffect(() => {
+    //     const unsub = onSnapshot(collection(db, "Room"), (snapshot) => {
+    //         let list = [];
+    //         snapshot.docs.forEach((doc) => {
+    //             list.push({ id: doc.id, ...doc.data() });
+    //         });
+    //         setData(list);
+    //     },
+    //         (err) => {
+    //             console.log(err);
+    //         }
+    //     );
+    //     return () => {
+    //         unsub();
+    //     };
+    // }, [])
 
     const handleInput = (e) => {
         const id = e.target.id;
@@ -46,9 +46,9 @@ const BookingRoom = () => {
 
     const formattedDate = formatDate(date);
 
-    useEffect(()=>{
-        setDate(formattedDate)
-    },[date,formattedDate])
+    // useEffect(()=>{
+    //     setDate(formattedDate)
+    // },[date,formattedDate])
 
     const handleADD = async (e) => {
         e.preventDefault()

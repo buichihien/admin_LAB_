@@ -50,8 +50,6 @@ const NewUser = () => {
         file && uploadFile();
     }, [file])
 
-
-
     const handleInput = (e) => {
         const id = e.target.id;
         const value = e.target.value;

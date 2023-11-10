@@ -1,56 +1,41 @@
-import React, { useEffect, useState } from "react";
-// import "./newUser.scss";
+import React, { useEffect, useId, useState } from "react";
+// import "./bookingRoom.scss";
 import { auth, db, storage } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
-import { Devices } from "../../formSoure";
-import { BsImage } from 'react-icons/bs';
+import { addDoc, collection, doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
+import {Devices} from "../../formSoure";
 import { useNavigate } from "react-router";
 
 
 const NewDevice = () => {
-    const [file, setFile] = useState("");
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState("");
     const [data, setData] = useState({});
-    const [per, setPerc] = useState(null);
+    const valueData = collection(db, "Device");
     const navigate = useNavigate()
 
+    const formatDate = (dateStr) => {
+        const [year, month, day] = dateStr.split('-');
+        let newDate = `${day}-${month}-${year}`;
+        return newDate;
+    };
+
     useEffect(() => {
-        const uploadFile = () => {
-            const name = new Date().getTime() + file.name
-            const storageRef = ref(storage, file.name);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('Upload is ' + progress + '% done');
-                    setPerc(progress)
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                        default:
-                            break;
-                    }
-                },
-                (error) => {
-                    console.log(error)
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        setData((prev) => ({ ...prev, img: downloadURL }));
-                    });
-                }
-            );
+        const unsub = onSnapshot(collection(db, "Device"), (snapshot) => {
+            let list = [];
+            snapshot.docs.forEach((doc) => {
+                list.push({ id: doc.id, ...doc.data() });
+            });
+            setData(list);
+        },
+            (err) => {
+                console.log(err);
+            }
+        );
+        return () => {
+            unsub();
         };
-        file && uploadFile();
-    }, [file])
-
-
+    }, [])
 
     const handleInput = (e) => {
         const id = e.target.id;
@@ -59,23 +44,27 @@ const NewDevice = () => {
         setData({ ...data, [id]: value });
     }
 
+    const formattedDate = formatDate(date);
+
+    useEffect(()=>{
+        setDate(formattedDate)
+    },[date,formattedDate])
+
     const handleADD = async (e) => {
         e.preventDefault()
         try {
-            await setDoc(doc(db, "Devices"), {
-                ...data,
-                timeStamp: serverTimestamp(),
-            });
+            await addDoc(valueData,{
+                ...data,date,time
+            })
             navigate(-1)
         } catch (error) {
             console.log(error)
         }
     }
-
     return (
         <div className="formbold-main-wrapper">
             <div className="formbold-form-wrapper">
-                <h1>Add Device</h1>
+                <h1>Add User</h1>
                 <form onSubmit={handleADD}>
                     {Devices.map((input) => (<div className="formbold-input-flex" key={input.id}>
                         <div>
@@ -90,18 +79,13 @@ const NewDevice = () => {
                             />
                         </div>
                     </div>))}
-
-                    <div className="image">
-                        <label htmlFor="file" className="formbold-form-label"><BsImage/></label>
-                        <input
-                            type="file"
-                            id="file"
-                            onChange={(e) => setFile(e.target.files[0])}
-                            style={{ display: "none" }}
-                        />
+                    <div>
+                        <input type="date" className="date" onChange={(e) => setDate(e.target.value)}></input>
                     </div>
-
-                    <button className="formbold-btn" type="submit" disabled={per !== null && per < 100}>
+                    <div>
+                        <input type="time" className="time" onChange={(e) => setTime(e.target.value)}></input>
+                    </div>
+                    <button className="formbold-btn" type="submit">
                         ADD
                     </button>
                 </form>

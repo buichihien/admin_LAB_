@@ -63,13 +63,8 @@ const Users = () => {
                         }).map((data, index) => {
                             return (
                                 <tr key={data.id}>
-<<<<<<< HEAD
-                                    <td>{index}</td>
-                                    <td><img id="imgUser" src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
-=======
                                     <td>{index+1}</td>
                                     <td><img src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
->>>>>>> 87e31f239c78899299171eebd9e4406808a730a3
                                     <td>{data.username}</td>
                                     <td>{data.email}</td>
                                     <td>{data.phone}</td>
