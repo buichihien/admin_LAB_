@@ -24,39 +24,3 @@ export const Users = [
         placeholder: "(319) 555-0115"
     },
 ]
-
-export const Devices = [
-    {
-        type: "text",
-        label: "DeviceName",
-        id: "devicename",
-        placeholder: "Name"
-    },
-    {
-        type: "text",
-        label: "Seri",
-        id: "seri",
-        placeholder: "seri"
-    },
-    {
-        type: "text",
-        label: "Quantity",
-        id: "quantity",
-        placeholder: "123"
-    },
-    {
-        type: "text",
-        label: "State",
-        id: "state",
-        placeholder: ""
-    },
-]
-
-export const bookAClassroom = [
-    {
-        type: "text",
-        label: "Username",
-        id: "username",
-        placeholder: "Jane"
-    },
-]
