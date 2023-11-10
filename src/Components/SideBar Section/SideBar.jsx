@@ -43,7 +43,7 @@ const SideBar = () => {
 
                     </li>
                     <li className="listItem">
-                        <Link to="#" className='menuLink flex'>
+                        <Link to="/devices" className='menuLink flex'>
                             <AiFillAndroid className="icon" />
                             <span className="smallText">
                                 Devices

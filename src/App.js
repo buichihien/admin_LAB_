@@ -8,7 +8,9 @@ import SideBar from "./Components/SideBar Section/SideBar";
 import Body from "./Components/Body Section/Body";
 import Users from "./Components/Users Section/Users";
 import NewUser from "./Components/New User/NewUser";
-
+import Devices from "./Components/Devices Section/Devices";
+import NewDevice from "./Components/NewDevice/NewDevice";
+import BookAClassroom from "./Components/BookAClassroom  Section/BookAClassroom";
 
 const App = () => {
     const { currentUser } = useContext(AuthContext);
@@ -33,6 +35,14 @@ const App = () => {
                         <Route
                             path="/NewUser"
                             element={<NewUser />}
+                        />
+                        <Route
+                            path="/devices"
+                            element={<Devices />}
+                        />
+                        <Route
+                            path="/NewDevice"
+                            element={<NewDevice />}
                         />
                     </Routes>
                 </div>
