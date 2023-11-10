@@ -10,7 +10,6 @@ import { db } from "../../firebase";
 const Devices = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
-    const value = collection(db, "Users")
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Devices"), (snapshot) => {
             let list = [];

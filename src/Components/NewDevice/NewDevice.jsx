@@ -1,41 +1,54 @@
-import React, { useEffect, useId, useState } from "react";
-// import "./bookingRoom.scss";
+import React, { useEffect, useState } from "react";
+// import "./newUser.scss";
 import { auth, db, storage } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection, doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
-import {Devices} from "../../formSoure";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { Devices } from "../../formSoure";
+import { BsImage } from 'react-icons/bs';
 import { useNavigate } from "react-router";
 
 
 const NewDevice = () => {
-    const [date, setDate] = useState('');
-    const [time, setTime] = useState("");
+    const [file, setFile] = useState("");
     const [data, setData] = useState({});
-    const valueData = collection(db, "Device");
+    const [per, setPerc] = useState(null);
     const navigate = useNavigate()
-
-    const formatDate = (dateStr) => {
-        const [year, month, day] = dateStr.split('-');
-        let newDate = `${day}-${month}-${year}`;
-        return newDate;
-    };
+    const valueData = collection(db, "Device");
 
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, "Device"), (snapshot) => {
-            let list = [];
-            snapshot.docs.forEach((doc) => {
-                list.push({ id: doc.id, ...doc.data() });
-            });
-            setData(list);
-        },
-            (err) => {
-                console.log(err);
-            }
-        );
-        return () => {
-            unsub();
+        const uploadFile = () => {
+            const name = new Date().getTime() + file.name
+            const storageRef = ref(storage, file.name);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    setPerc(progress)
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            console.log('Upload is running');
+                            break;
+                        default:
+                            break;
+                    }
+                },
+                (error) => {
+                    console.log(error)
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        setData((prev) => ({ ...prev, img: downloadURL }));
+                    });
+                }
+            );
         };
-    }, [])
+        file && uploadFile();
+    }, [file])
 
     const handleInput = (e) => {
         const id = e.target.id;
@@ -44,17 +57,11 @@ const NewDevice = () => {
         setData({ ...data, [id]: value });
     }
 
-    const formattedDate = formatDate(date);
-
-    useEffect(()=>{
-        setDate(formattedDate)
-    },[date,formattedDate])
-
     const handleADD = async (e) => {
         e.preventDefault()
         try {
             await addDoc(valueData,{
-                ...data,date,time
+                ...data,
             })
             navigate(-1)
         } catch (error) {
@@ -79,13 +86,17 @@ const NewDevice = () => {
                             />
                         </div>
                     </div>))}
-                    <div>
-                        <input type="date" className="date" onChange={(e) => setDate(e.target.value)}></input>
+                    <div className="image">
+                        <label htmlFor="file" className="formbold-form-label"><BsImage/></label>
+                        <input
+                            type="file"
+                            id="file"
+                            onChange={(e) => setFile(e.target.files[0])}
+                            style={{ display: "none" }}
+                        />
                     </div>
-                    <div>
-                        <input type="time" className="time" onChange={(e) => setTime(e.target.value)}></input>
-                    </div>
-                    <button className="formbold-btn" type="submit">
+
+                    <button className="formbold-btn" type="submit" disabled={per !== null && per < 100}>
                         ADD
                     </button>
                 </form>
