@@ -1,0 +1,8 @@
+.imgDevices {
+  width: 150px;
+  height: 150px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  box-shadow: 0 2px 4px var(--itemCardColor);
+  margin-right: 1rem;
+}/*# sourceMappingURL=devices.css.map */
