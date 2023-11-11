@@ -13,21 +13,21 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const {dispatch} = useContext(AuthContext)
+    const { dispatch } = useContext(AuthContext)
 
     const handleLogin = (e) => {
         e.preventDefault();
-        signInWithEmailAndPassword (auth, email, password)
-        .then((userCredential) => {
-            // Signed up 
-            const user = userCredential.user;  
-            dispatch({type:"LOGIN", payload:user})     
-            navigate("/")         
-        })
-        .catch((error) => {
-            setError(true)
-            console.log(error)
-        });
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                dispatch({ type: "LOGIN", payload: user });
+                navigate("/");
+            })
+            .catch((error) => {
+                setError(true)
+                console.log(error)
+            });
     }
 
     return (
@@ -37,11 +37,11 @@ const Login = () => {
                     <form className="login" onSubmit={handleLogin}>
                         <div className="login__field">
                             <i className="login__icon fas fa-user"></i>
-                            <input type="email" className="login__input" placeholder="User name / Email" onChange={e=>setEmail(e.target.value)}/>
+                            <input type="email" className="login__input" placeholder="User name / Email" onChange={e => setEmail(e.target.value)} />
                         </div>
                         <div className="login__field">
                             <i className="login__icon fas fa-lock"></i>
-                            <input type="password" className="login__input" placeholder="Password" onChange={e=>setPassword(e.target.value)}/>
+                            <input type="password" className="login__input" placeholder="Password" onChange={e => setPassword(e.target.value)} />
                         </div>
                         <button className="button login__submit" type="submit">
                             <span className="button__text">Log In Now</span>
@@ -50,7 +50,7 @@ const Login = () => {
                     </form>
                     {error && <span className="error">Wrong Email or password</span>}
                     <div className="social-login">
-                        <h3>Log in via</h3>
+                        <h3>B501-AI-Lab</h3>
                         <div className="social-icons">
                             <a href="#" className="social-login__icon fab fa-instagram"></a>
                             <a href="#" className="social-login__icon fab fa-facebook"></a>

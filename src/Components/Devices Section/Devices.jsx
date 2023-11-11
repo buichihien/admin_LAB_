@@ -28,7 +28,7 @@ const Devices = () => {
     }, [])
     
     const handleDelete = async (id) => {
-        const deleteVal = doc(db, "Devices", id)
+        const deleteVal = doc(db, "Device", id)
         await deleteDoc(deleteVal)
     }
     
@@ -59,12 +59,12 @@ const Devices = () => {
                         {data.filter((data)=>{
                             return search.toLowerCase() === ''
                             ? data
-                            :  data.username.toLowerCase().includes(search);
+                            :  data.devicename.toLowerCase().includes(search);
                         }).map((data, index) => {
                             return (
                                 <tr key={data.id}>
-                                    <td>{index}</td>
-                                    <td><img id="imgDevices" src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
+                                    <td>{index+1}</td>
+                                    <td><img id="imgDevices" style={{ maxWidth: '100%', maxHeight: '400px', borderRadius: '0' }} src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
                                     <td>{data.devicename}</td>
                                     <td>{data.seri}</td>
                                     <td>{data.quantity}</td>

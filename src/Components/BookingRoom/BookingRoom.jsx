@@ -73,7 +73,7 @@ const BookingRoom = () => {
                         </div>
                     </div>))}
                     <div>
-                        <input type="date" className="date" onChange={(e) => setDate(e.target.value)}></input>
+                        <input type="date" className="date" onChange={(e) => setDate(e.target.value)} ></input>
                     </div>
                     <div>
                         <input type="time" className="time" onChange={(e) => setTime(e.target.value)}></input>

@@ -16,6 +16,16 @@ const Users = () => {
             snapshot.docs.forEach((doc) => {
                 list.push({ id: doc.id, ...doc.data() });
             });
+            list.sort((a, b) => {
+                // Compare dates first
+                const dateComparison = a.date.localeCompare(b.date);
+                if (dateComparison !== 0) {
+                    return dateComparison;
+                }
+    
+                // If dates are equal, compare times
+                return a.time.localeCompare(b.time);
+            });    
             setData(list);
         },
             (err) => {
@@ -48,6 +58,7 @@ const Users = () => {
                         <tr>
                             <th>S No.</th>
                             <th>Name</th>
+                            <th>EmailUser</th>
                             <th>Class</th>
                             <th>Phone</th>
                             <th>DateBooking</th>
@@ -65,6 +76,7 @@ const Users = () => {
                                 <tr key={data.id}>
                                     <td>{index+1}</td>
                                     <td>{data.username}</td>
+                                    <td>{data.userEmail}</td>
                                     <td>{data.class}</td>
                                     <td>{data.phone}</td>
                                     <td>{data.date}</td>

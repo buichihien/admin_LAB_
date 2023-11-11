@@ -1,6 +1,6 @@
 #imgDevices {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   -o-object-fit: cover;
      object-fit: cover;
   box-shadow: 0 2px 4px var(--itemCardColor);

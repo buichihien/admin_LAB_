@@ -93,9 +93,8 @@ const NewUser = () => {
                             />
                         </div>
                     </div>))}
-
                     <div className="image">
-                        <label htmlFor="file" className="formbold-form-label"><BsImage/></label>
+                        <label htmlFor="file" className="formbold-form-label"><BsImage /></label>
                         <input
                             type="file"
                             id="file"
