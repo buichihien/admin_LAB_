@@ -52,7 +52,7 @@ const SideBar = () => {
 
                     </li>
                     <li className="listItem">
-                        <Link to="#" className='menuLink flex'>
+                        <Link to="/personnel" className='menuLink flex'>
                             <BsFillFileEarmarkPersonFill className="icon" />
                             <span className="smallText">
                                 Personnel
@@ -60,17 +60,6 @@ const SideBar = () => {
                         </Link>
 
                     </li>
-
-                    <li className="listItem">
-                        <Link to="#" className='menuLink flex'>
-                            <BsFillPersonVcardFill className="icon" />
-                            <span className="smallText">
-                                Interns
-                            </span>
-                        </Link>
-
-                    </li>
-
                     <li className="listItem">
                         <Link to="/room" className='menuLink flex'>
                             <SiGoogleclassroom className="icon" />

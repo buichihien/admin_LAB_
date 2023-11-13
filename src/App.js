@@ -12,6 +12,8 @@ import Devices from "./Components/Devices Section/Devices";
 import NewDevice from "./Components/NewDevice/NewDevice";
 import Room from "./Components/Room Section/Room";
 import BookingRoom from "./Components/BookingRoom/BookingRoom";
+import Personnel from "./Components/Personnel Section/Personnel";
+import NewPersonnel from "./Components/New Personnel/NewPersonnel";
 
 const App = () => {
     const { currentUser } = useContext(AuthContext);
@@ -44,6 +46,14 @@ const App = () => {
                         <Route
                             path="/NewDevice"
                             element={<NewDevice />}
+                        />
+                        <Route
+                            path="/personnel"
+                            element={<Personnel />}
+                        />
+                        <Route
+                            path="/NewPersonnel"
+                            element={<NewPersonnel />}
                         />
                         <Route
                             path="/room"

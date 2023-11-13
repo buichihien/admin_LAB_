@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./devices.css";
+import "./personnel.css";
 import { FcSearch } from "react-icons/fc";
 import { BiSolidCommentEdit } from "react-icons/bi";
 import { RiChatDeleteFill } from "react-icons/ri";
@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { collection, deleteDoc, doc, setDoc, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 
-const Devices = () => {
+
+const Personnel = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
+    
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, "Device"), (snapshot) => {
+        const unsub = onSnapshot(collection(db, "Personnel"), (snapshot) => {
             let list = [];
             snapshot.docs.forEach((doc) => {
                 list.push({ id: doc.id, ...doc.data() });
@@ -25,6 +27,7 @@ const Devices = () => {
         return()=>{
             unsub();
         };
+        
     }, [])
 
     const handleToggle = async (employeeId) => {
@@ -41,20 +44,20 @@ const Devices = () => {
         const docRef = doc(db, "Personnel", employeeId);
         await setDoc(docRef, { status: updatedData.find((employee) => employee.id === employeeId).status }, { merge: true });
     };
-    
+      
     const handleDelete = async (id) => {
-        const deleteVal = doc(db, "Device", id)
+        const deleteVal = doc(db, "Personnel", id)
         await deleteDoc(deleteVal)
     }
-    
+
     return (
         <div className="mainContent">
             <div className="top">
                 <div className="searchBar flex">
-                    <input type="text" placeholder="Search Devices" onChange={(e) => setSearch(e.target.value)}/>
+                    <input type="text" placeholder="Search Personnel" onChange={(e) => setSearch(e.target.value)}/>
                     <FcSearch className="icon" />
                 </div>
-                <div><button><Link to="/NewDevice">Add Device</Link></button></div>
+                <div><button><Link to="/NewPersonnel">Add Personnel</Link></button></div>
             </div>
 
             <div className="header_fixed">
@@ -63,27 +66,26 @@ const Devices = () => {
                         <tr>
                             <th>S No.</th>
                             <th>Image</th>
-                            <th>DeviceName</th>
-                            <th>Seri</th>
-                            <th>Quantity</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
                             <th>State</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.filter((item)=>{
-                            return search.toLowerCase() === ''
-                            ? item
-                            :  item.seri.toLowerCase().includes(search);
-                        }).map((item, index) => {
-                            return (
+                        {data
+                            .filter((item) => {
+                                return search.toLowerCase() === '' ? true : item.personnelname.toLowerCase().includes(search);
+                            })
+                            .map((item, index) => (
                                 <tr key={item.id}>
-                                    <td>{index+1}</td>
-                                    <td><img id="imgDevices" style={{ maxWidth: '100%', maxHeight: '400px', borderRadius: '0' }} src={item.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
-                                    <td>{item.devicename}</td>
-                                    <td>{item.seri}</td>
-                                    <td>{item.quantity}</td>
-                                    <td>
+                                    <td>{index + 1}</td>
+                                    <td><img style={{ width: '65%', height: '70px' }} src={item.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt={item.personnelname} /></td>
+                                    <td>{item.personnelname}</td>
+                                    <td>{item.email}</td>
+                                    <td>{item.phone}</td>
+                                    <td>                                         
                                         <button className="status" onClick={() => handleToggle(item.id)}>
                                             <span>{item.status ? 'ON' : 'OFF'}</span>
                                         </button>
@@ -91,11 +93,10 @@ const Devices = () => {
                                     <td>
                                         <button><BiSolidCommentEdit className="icon2" /></button>
                                         <span>   </span>
-                                        <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
+                                        <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
                                 </tr>
-                            )
-                        })}
+                            ))}
                     </tbody>
                 </table>
             </div>
@@ -103,4 +104,4 @@ const Devices = () => {
     )  
 };
 
-export default Devices;
+export default Personnel;

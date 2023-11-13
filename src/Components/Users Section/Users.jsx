@@ -64,7 +64,7 @@ const Users = () => {
                             return (
                                 <tr key={data.id}>
                                     <td>{index+1}</td>
-                                    <td><img style={{ width: '25%', height: '70px'}} src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
+                                    <td><img style={{ width: '30%', height: '70px'}} src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
                                     <td>{data.username}</td>
                                     <td>{data.email}</td>
                                     <td>{data.phone}</td>

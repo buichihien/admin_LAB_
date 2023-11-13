@@ -78,3 +78,24 @@ export const Room = [
         placeholder: "(319) 555-0115"
     },
 ]
+
+export const Personnel = [
+    {
+        type: "text",
+        label: "Name",
+        id: "personnelname",
+        placeholder: "Jane"
+    },
+    {
+        type: "email",
+        label: "Email",
+        id: "email",
+        placeholder: "Jane123@"
+    },
+    {
+        type: "number",
+        label: "Phone",
+        id: "phone",
+        placeholder: "123"
+    },
+]
