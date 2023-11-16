@@ -85,7 +85,7 @@ const Devices = () => {
                                     <td>{item.quantity}</td>
                                     <td>
                                         <button className="status" onClick={() => handleToggle(item.id)}>
-                                            <span>{item.status ? 'ON' : 'OFF'}</span>
+                                            <p>{item.status ? 'CÒN' : 'HẾT'}</p>
                                         </button>
                                     </td>
                                     <td>

@@ -1,7 +1,13 @@
 td button.status {
-    color: #44b478;
+    background-color: var(--PrimaryColor);
+    color: #fff;
+    min-width: 55%;
 }
 
-td button.status :hover {
-    color: rgb(255, 1, 9), 106, 0;
+button.status :focus {
+    background-color: rgb(255, 0, 0)505;
+}
+
+button p {
+    font-size: 14px;
 }

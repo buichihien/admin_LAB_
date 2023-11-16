@@ -87,15 +87,15 @@ export const Personnel = [
         placeholder: "Jane"
     },
     {
-        type: "email",
-        label: "Email",
-        id: "email",
-        placeholder: "Jane123@"
+        type: "text",
+        label: "Time In",
+        id: "timein",
+        placeholder: "" 
     },
     {
-        type: "number",
-        label: "Phone",
-        id: "phone",
-        placeholder: "123"
+        type: "text",
+        label: "Time Out",
+        id: "timeout",
+        placeholder: ""
     },
 ]

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router";
 const NewPersonnel = () => {
     const [file, setFile] = useState("");
     const [data, setData] = useState({});
-    const [per, setPerc] = useState(null);
+    const [per, setPerc] = useState(null);   
     const navigate = useNavigate()
     const valueData = collection(db, "Personnel");
 
@@ -60,9 +60,7 @@ const NewPersonnel = () => {
     const handleADD = async (e) => {
         e.preventDefault()
         try {
-            await addDoc(valueData,{
-                ...data,
-            })
+            await addDoc(valueData, { ...data});
             navigate(-1)
         } catch (error) {
             console.log(error)
@@ -71,7 +69,7 @@ const NewPersonnel = () => {
     return (
         <div className="formbold-main-wrapper">
             <div className="formbold-form-wrapper">
-                <h1>Add User</h1>
+                <h1>New Personnel</h1>
                 <form onSubmit={handleADD}>
                     {Personnel.map((input) => (<div className="formbold-input-flex" key={input.id}>
                         <div>
@@ -95,7 +93,6 @@ const NewPersonnel = () => {
                             style={{ display: "none" }}
                         />
                     </div>
-
                     <button className="formbold-btn" type="submit" disabled={per !== null && per < 100}>
                         ADD
                     </button>

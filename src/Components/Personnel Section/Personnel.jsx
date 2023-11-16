@@ -4,13 +4,15 @@ import { FcSearch } from "react-icons/fc";
 import { BiSolidCommentEdit } from "react-icons/bi";
 import { RiChatDeleteFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { collection, deleteDoc, doc, setDoc, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, deleteDoc, doc, setDoc, getDocs, onSnapshot, and } from "firebase/firestore";
 import { db } from "../../firebase";
 
 
 const Personnel = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
+    const [editedData, setEditedData] = useState({});
+    const [editMode, setEditMode] = useState(false);
     
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Personnel"), (snapshot) => {
@@ -44,9 +46,32 @@ const Personnel = () => {
         const docRef = doc(db, "Personnel", employeeId);
         await setDoc(docRef, { status: updatedData.find((employee) => employee.id === employeeId).status }, { merge: true });
     };
+
+    const handleEdit = (id) => {
+        const dataToEdit = data.find((employee) => employee.id === id);
+        setEditedData(dataToEdit);
+        setEditMode(true);
+    };
+
+    const handleUpdate = async () => {
+        const docRef = doc(db, "Personnel", editedData.id)
+        try {
+            await setDoc(docRef, {
+                personnelname: editedData.personnelname,
+                worktime: editedData.worktime,
+
+            }, { merge: true });
+
+            setEditMode(false);
+            setEditedData({});
+
+        } catch (error) {
+            console.log(error);
+        }       
+      };
       
     const handleDelete = async (id) => {
-        const deleteVal = doc(db, "Personnel", id)
+        const deleteVal = doc(db, "Personnel", id);
         await deleteDoc(deleteVal)
     }
 
@@ -67,8 +92,8 @@ const Personnel = () => {
                             <th>S No.</th>
                             <th>Image</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
+                            <th>Time In</th>
+                            <th>Time Out</th>
                             <th>State</th>
                             <th>Action</th>
                         </tr>
@@ -83,15 +108,17 @@ const Personnel = () => {
                                     <td>{index + 1}</td>
                                     <td><img style={{ width: '65%', height: '70px' }} src={item.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt={item.personnelname} /></td>
                                     <td>{item.personnelname}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.phone}</td>
+                                    <td>{item.timein}</td>
+                                    <td>{item.timeout}</td>
                                     <td>                                         
                                         <button className="status" onClick={() => handleToggle(item.id)}>
-                                            <span>{item.status ? 'ON' : 'OFF'}</span>
+                                            <p>{item.status ? 'ON' : 'OFF'}</p>
                                         </button>
                                     </td>
-                                    <td>
-                                        <button><BiSolidCommentEdit className="icon2" /></button>
+                                    <td>           
+                                        <button>
+                                            <Link to="/EditPersonnel"><BiSolidCommentEdit className="icon2" /></Link>                                                                                      
+                                        </button>
                                         <span>   </span>
                                         <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
