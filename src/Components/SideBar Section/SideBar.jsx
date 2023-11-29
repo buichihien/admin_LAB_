@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./sideBar.css";
-import logo from '../../Assets/LogoLHU.png';
+import logo from '../../Assets/lOGO DUNG VI_Large.png';
 import { IoMdSpeedometer } from 'react-icons/io';
 // import { AiFillAlert } from 'react-icons/ai';
 import { AiFillAndroid } from 'react-icons/ai';

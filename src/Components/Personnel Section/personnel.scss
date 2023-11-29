@@ -4,8 +4,8 @@ td button.status {
     min-width: 55%;
 }
 
-button.status :focus {
-    background-color: rgb(255, 0, 0)505;
+.status:active {
+    background-color: hsl(0deg 98.12% 41.17%);
 }
 
 button p {

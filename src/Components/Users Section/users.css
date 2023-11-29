@@ -56,6 +56,26 @@
   border: 1px solid var(--PrimaryColor);
 }
 
+/* Responsive Styles for Tablets (landscape) */
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  .mainContent .header_fixed th,
+  .mainContent .header_fixed td {
+    border-bottom: 1px solid #dddddd;
+    padding: 12px 6px;
+    font-size: 12px;
+  }
+  .mainContent .header_fixed td img {
+    width: 60px;
+    height: 60px;
+  }
+}
+/* Responsive Styles for Phones */
+@media only screen and (max-width: 599px) {
+  .mainContent {
+    width: 100%;
+    padding: 1rem;
+  }
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -98,13 +118,12 @@ td {
 }
 
 td img#imgUser {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
   box-shadow: 0 2px 4px var(--itemCardColor);
-  margin-right: 1rem;
 }
 
 tr:nth-child(even) {

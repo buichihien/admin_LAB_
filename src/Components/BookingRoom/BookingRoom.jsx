@@ -20,23 +20,6 @@ const BookingRoom = () => {
         return newDate;
     };
 
-    useEffect(() => {
-        const unsub = onSnapshot(collection(db, "Room"), (snapshot) => {
-            let list = [];
-            snapshot.docs.forEach((doc) => {
-                list.push({ id: doc.id, ...doc.data() });
-            });
-            setData(list);
-        },
-            (err) => {
-                console.log(err);
-            }
-        );
-        return () => {
-            unsub();
-        };
-    }, [])
-
     const handleInput = (e) => {
         const id = e.target.id;
         const value = e.target.value;

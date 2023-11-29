@@ -14,7 +14,6 @@ import Room from "./Components/Room Section/Room";
 import BookingRoom from "./Components/BookingRoom/BookingRoom";
 import Personnel from "./Components/Personnel Section/Personnel";
 import NewPersonnel from "./Components/New Personnel/NewPersonnel";
-import EditPersonnel from "./Components/EditPersonnel/EditPersonnel";
 
 const App = () => {
     const { currentUser } = useContext(AuthContext);
@@ -58,11 +57,6 @@ const App = () => {
                             path="/NewPersonnel"
                             element={<NewPersonnel />}
                         />
-                        <Route
-                            path="/EditPersonnel"
-                            element={<EditPersonnel />}
-                        />
-                        {/* Personnel */}
 
                         <Route
                             path="/room"

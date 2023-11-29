@@ -12,7 +12,6 @@ const Personnel = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
     const [editedData, setEditedData] = useState({});
-    const [editMode, setEditMode] = useState(false);
     
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Personnel"), (snapshot) => {
@@ -46,29 +45,6 @@ const Personnel = () => {
         const docRef = doc(db, "Personnel", employeeId);
         await setDoc(docRef, { status: updatedData.find((employee) => employee.id === employeeId).status }, { merge: true });
     };
-
-    const handleEdit = (id) => {
-        const dataToEdit = data.find((employee) => employee.id === id);
-        setEditedData(dataToEdit);
-        setEditMode(true);
-    };
-
-    const handleUpdate = async () => {
-        const docRef = doc(db, "Personnel", editedData.id)
-        try {
-            await setDoc(docRef, {
-                personnelname: editedData.personnelname,
-                worktime: editedData.worktime,
-
-            }, { merge: true });
-
-            setEditMode(false);
-            setEditedData({});
-
-        } catch (error) {
-            console.log(error);
-        }       
-      };
       
     const handleDelete = async (id) => {
         const deleteVal = doc(db, "Personnel", id);
@@ -106,7 +82,7 @@ const Personnel = () => {
                             .map((item, index) => (
                                 <tr key={item.id}>
                                     <td>{index + 1}</td>
-                                    <td><img style={{ width: '65%', height: '70px' }} src={item.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt={item.personnelname} /></td>
+                                    <td><img src={item.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt={item.personnelname} /></td>
                                     <td>{item.personnelname}</td>
                                     <td>{item.timein}</td>
                                     <td>{item.timeout}</td>
