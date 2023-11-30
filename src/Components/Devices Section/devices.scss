@@ -1,7 +1,10 @@
-#imgDevices {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-    box-shadow: 0 2px 4px var(--itemCardColor);
-    margin-right: 1rem;
+td img#imgDevices {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 0px;
+}
+button.quantity-button {
+    font-size: 16px;
+    padding: 1px;
+    margin: 0px 10px;
 }

@@ -39,16 +39,10 @@ export const Devices = [
         placeholder: "seri"
     },
     {
-        type: "text",
+        type: "number",
         label: "Quantity",
         id: "quantity",
         placeholder: "quantity"
-    },
-    {
-        type: "text",
-        label: "State",
-        id: "state",
-        placeholder: ""
     },
 ]
 

@@ -91,12 +91,8 @@ const Personnel = () => {
                                             <p>{item.status ? 'ON' : 'OFF'}</p>
                                         </button>
                                     </td>
-                                    <td>           
-                                        <button>
-                                            <Link to="/EditPersonnel"><BiSolidCommentEdit className="icon2" /></Link>                                                                                      
-                                        </button>
-                                        <span>   </span>
-                                        <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
+                                    <td>
+                                        <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
                                 </tr>
                             ))}

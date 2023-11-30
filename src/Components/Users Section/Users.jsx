@@ -64,13 +64,11 @@ const Users = () => {
                             return (
                                 <tr key={data.id}>
                                     <td>{index+1}</td>
-                                    <td><img src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
+                                    <td><img id="imgUser" src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
                                     <td>{data.username}</td>
                                     <td>{data.email}</td>
                                     <td>{data.phone}</td>
-                                    <td>
-                                        <button><BiSolidCommentEdit className="icon2" /></button>
-                                        <span>   </span>
+                                    <td>                                       
                                         <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
                                 </tr>

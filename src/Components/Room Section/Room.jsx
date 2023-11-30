@@ -82,8 +82,6 @@ const Users = () => {
                                     <td>{data.date}</td>
                                     <td>{data.time}</td>
                                     <td>
-                                        <button><BiSolidCommentEdit className="icon2" /></button>
-                                        <span>   </span>
                                         <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
                                 </tr>
