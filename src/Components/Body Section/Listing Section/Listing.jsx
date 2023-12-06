@@ -40,7 +40,7 @@ const Listing = () => {
             <div className="secContainer flex">
                 {data.slice(0, 10).map((data, index) => {
                     return (
-                        <div className="singleItem">
+                        <div key={index} className="singleItem">
                             <AiFillHeart className="icon" />
                             <img src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt="" />
                             <h3>Robot {index+1}</h3>

@@ -35,7 +35,7 @@ const Activity = () => {
             <div className="secContainer grid">
                 {data.slice(0, 6).map((data, index) => {
                     return (
-                        <div className="singleCustomer flex">
+                        <div key={index} className="singleCustomer flex">
                             <img src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt="" />
                             <div className="customerDetails">
                                 <span className="name">{data.username}</span>

@@ -5,3 +5,31 @@
     box-shadow: 0 2px 4px var(--itemCardColor);
     margin-right: 1rem;
 }
+
+.state {
+    border-radius: 5px;
+    background-color: hsl(94, 59%, 35%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 900px) {
+    td{
+        padding: 8px 2px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .imgDevices {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .imgDevices {
+        width: 70px;
+        height: 70px;
+    }
+}

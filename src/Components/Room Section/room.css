@@ -161,4 +161,25 @@ td {
 
 ::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (max-width: 900px) {
+  td {
+    padding: 8px 2px;
+    font-size: 15px;
+  }
+  th {
+    padding: 4px 2px;
+  }
+}
+@media screen and (max-width: 650px) {
+  td {
+    font-size: 10px;
+  }
+  th {
+    padding: 2px -2px;
+  }
+  .header_fixed thead th {
+    font-size: 10px;
+  }
 }/*# sourceMappingURL=room.css.map */

@@ -146,6 +146,42 @@
     margin-left: 230px;
   }
 }
+@media screen and (max-width: 1000px) {
+  .date {
+    margin-left: 200px;
+  }
+  .time {
+    margin-top: 10px;
+    margin-left: 215px;
+  }
+  .formbold-btn {
+    margin-left: 155px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .date {
+    margin-left: 145px;
+  }
+  .time {
+    margin-top: 10px;
+    margin-left: 165px;
+  }
+  .formbold-btn {
+    margin-left: 125px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .date {
+    margin-left: 100px;
+  }
+  .time {
+    margin-top: 10px;
+    margin-left: 115px;
+  }
+  .formbold-btn {
+    margin-left: 85px;
+  }
+}
 @media screen and (max-width: 600px) {
   .date {
     margin-left: 50px;

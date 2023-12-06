@@ -132,7 +132,7 @@
   cursor: pointer;
   margin-top: 25px;
 
-  &:disabled{
+  &:disabled {
     background-color: rgba(3, 92, 92, 0.322);
     cursor: not-allowed;
   }
@@ -142,37 +142,82 @@
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
 }
 
-.time{
+.time {
   margin-top: 10px;
   margin-left: 340px;
 }
 
 @media screen and (max-width: 1818px) {
-  .date{
+  .date {
     margin-left: 320px;
   }
 
-  .time{
+  .time {
     margin-top: 10px;
     margin-left: 340px;
   }
 
-  .formbold-btn{
+  .formbold-btn {
     margin-left: 230px;
   }
 }
 
+@media screen and (max-width: 1000px) {
+  .date {
+    margin-left: 200px;
+  }
+
+  .time {
+    margin-top: 10px;
+    margin-left: 215px;
+  }
+
+  .formbold-btn {
+    margin-left: 155px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .date {
+    margin-left: 145px;
+  }
+
+  .time {
+    margin-top: 10px;
+    margin-left: 165px;
+  }
+
+  .formbold-btn {
+    margin-left: 125px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .date {
+    margin-left: 100px;
+  }
+
+  .time {
+    margin-top: 10px;
+    margin-left: 115px;
+  }
+
+  .formbold-btn {
+    margin-left: 85px;
+  }
+}
+
 @media screen and (max-width: 600px) {
-  .date{
+  .date {
     margin-left: 50px;
   }
 
-  .time{
+  .time {
     margin-top: 10px;
     margin-left: 65px;
   }
 
-  .formbold-btn{
+  .formbold-btn {
     margin-left: 65px;
   }
 }

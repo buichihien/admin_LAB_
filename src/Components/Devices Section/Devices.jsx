@@ -42,7 +42,7 @@ const Devices = () => {
                             <th>DeviceName</th>
                             <th>Seri</th>
                             <th>Quantity</th>
-                            <th>State</th>
+                            {/* <th>State</th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +58,7 @@ const Devices = () => {
                                     <td>{data.devicename}</td>
                                     <td>{data.seri}</td>
                                     <td>{data.quantity}</td>
-                                    <td>{data.state}</td>                                  
+                                    {/* <td><div className="state">{data.state}</div></td>                                   */}
                                 </tr>
                             )
                         })}
