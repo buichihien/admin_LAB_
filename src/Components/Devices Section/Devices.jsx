@@ -99,22 +99,20 @@ const Devices = () => {
                                     <td>{item.devicename}</td>
                                     <td>{item.seri}</td>
                                     <td>
-                                        <td>{item.quantity}</td>
-                                        <td>
-                                            <button
-                                                className="quantity-button"
-                                                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                            >
-                                                <FontAwesomeIcon icon={faPlus} />
-                                            </button>
-                                            <button
-                                                className="quantity-button"
-                                                onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                                disabled={item.quantity === 0}
-                                            >
-                                                <FontAwesomeIcon icon={faMinus} />
-                                            </button>
-                                        </td>
+                                        {item.quantity}
+                                        <button
+                                            className="quantity-button"
+                                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                        >
+                                            <FontAwesomeIcon icon={faPlus} />
+                                        </button>
+                                        <button
+                                            className="quantity-button"
+                                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                            disabled={item.quantity === 0}
+                                        >
+                                            <FontAwesomeIcon icon={faMinus} />
+                                        </button>                                      
                                     </td>                                  
                                     <td>
                                         <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>

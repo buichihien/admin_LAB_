@@ -11,7 +11,6 @@ import { db } from "../../firebase";
 const Personnel = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
-    const [editedData, setEditedData] = useState({});
     
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Personnel"), (snapshot) => {
@@ -92,7 +91,7 @@ const Personnel = () => {
                                         </button>
                                     </td>
                                     <td>
-                                        <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
+                                        <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
                                 </tr>
                             ))}
