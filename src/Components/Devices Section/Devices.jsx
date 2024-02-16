@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./devices.css";
 import { FcSearch } from "react-icons/fc";
-import { BiSolidCommentEdit } from "react-icons/bi";
 import { RiChatDeleteFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { collection, deleteDoc, doc, setDoc, onSnapshot } from "firebase/firestore";
@@ -13,7 +12,6 @@ import { faMinus } from '@fortawesome/free-solid-svg-icons';
 const Devices = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
-
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Device"), (snapshot) => {
             let list = [];
@@ -115,7 +113,7 @@ const Devices = () => {
                                         </button>                                      
                                     </td>                                  
                                     <td>
-                                        <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
+                                        <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
                                 </tr>
                             ))}

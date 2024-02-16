@@ -5,6 +5,7 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { BsArrowRightShort } from "react-icons/bs";
 import { BsQuestionCircle } from 'react-icons/bs';
 import admin from "../../../Assets/admin.jpg"
+import khoaCNTT from "../../../Assets/khoaCNTT.jpg"
 import img from "../../../Assets/robo22.png"
 // import video from "../../../Assets/video.mp4"
 
@@ -32,16 +33,17 @@ const Top = () => {
 
             <div className="cardSection flex">
                 <div className="rightCard flex">
-                    <h1>AI-LAB</h1>
-                    <p>Information technology is not a product, but a process</p>
+                    {/* <h1>AI-LAB</h1>
+                    <p>Information technology is not a product, but a process</p> */}
 
-                    <div className="buttons flex">
+                    {/* <div className="buttons flex">
                         <button className="btn">Explore More</button>
                         <button className="btn transparent">A classroom</button>
-                    </div>
+                    </div> */}
 
                     <div className="videoDiv">
                         {/* <video src={video} autoPlay loop muted></video> */}
+                        <img src={khoaCNTT} alt="" />
                     </div>
                 </div>
 
