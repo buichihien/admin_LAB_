@@ -132,6 +132,7 @@ const Users = () => {
                 <td>{data.username}</td>
                 <td>{data.email}</td>
                 <td>{data.phone}</td>
+                <td>{data.role}</td>
                 <td>                                       
                     <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
                 </td>
@@ -160,6 +161,7 @@ const Users = () => {
                             <th>Username</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>

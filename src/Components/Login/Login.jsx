@@ -30,6 +30,26 @@ const Login = () => {
             });
     }
 
+    // cách đăng nhập cố định là email của admin
+    // const handleLogin = (e) => {
+    //     e.preventDefault();
+    //     signInWithEmailAndPassword(auth, email, password)
+    //         .then((userCredential) => {
+    //             const user = userCredential.user;
+    //             const isAdmin = user.email === "admin@gmail.com"; // Example: check if email is admin email
+    //             if (isAdmin) {
+    //                 dispatch({ type: "LOGIN", payload: { user, isAdmin } });
+    //                 navigate("/"); // Navigate to admin page
+    //             } else {
+    //                 setError(true);
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             setError(true);
+    //             console.log(error);
+    //         });
+    // };
+
     return (
         <div className="containerLogin">
             <div className="screen">

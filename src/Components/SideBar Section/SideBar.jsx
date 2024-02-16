@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./sideBar.css";
 import logo from '../../Assets/lOGO DUNG VI_Large.png';
 import { IoMdSpeedometer } from 'react-icons/io';
@@ -8,10 +8,26 @@ import { AiFillAndroid } from 'react-icons/ai';
 import { BsFillFileEarmarkPersonFill } from 'react-icons/bs';
 import { BsQuestionCircle } from 'react-icons/bs';
 import { BiSolidUser } from 'react-icons/bi';
-import { BsFillPersonVcardFill } from 'react-icons/bs';
 import { SiGoogleclassroom } from 'react-icons/si';
+import { AuthContext } from "../../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const SideBar = () => {
+    const navigate = useNavigate()
+    const { dispatch } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        signOut(auth)
+            .then(() => {
+                dispatch({ type: "LOGOUT" }); // dispatch action to clear user state
+                navigate("/login"); // navigate to login page or any other appropriate page
+            })
+            .catch((error) => {
+                console.error("Error signing out: ", error);
+            });
+    };
+
     return (
         <div className="sideBar grid">
             <div className="logoDiv flex">
@@ -35,7 +51,7 @@ const SideBar = () => {
                     </li>
                     <li className="listItem">
                         <Link to="/user" className='menuLink flex'>
-                            <BiSolidUser className="icon"/>
+                            <BiSolidUser className="icon" />
                             <span className="smallText">
                                 Users
                             </span>
@@ -113,7 +129,7 @@ const SideBar = () => {
 
                     <h3>Help Center</h3>
                     <p>Having trouble in Admin-Lab, please contact us from for more questions.</p>
-                    <button className="btn">Go to help center</button>
+                    <button className="btn" onClick={handleLogout}>LOG OUT</button>
                 </div>
             </div>
         </div>
