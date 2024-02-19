@@ -4,7 +4,7 @@ import SideBar from "./Components/SideBar Section/SideBar";
 import Body from "./Components/Body Section/Body";
 import Users from "./Components/Users Section/Users";
 import Devices from "./Components/Devices Section/Devices";
-import Personnel from "./Components/Personnel Section/Personnel";
+import Personnel from "./Components/ContentScreen/Personnel Section/Personnel";
 
 const Dashboard = () => {
     return (

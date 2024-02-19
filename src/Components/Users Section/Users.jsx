@@ -93,7 +93,7 @@ const Users = () => {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8); // Số mục trên mỗi trang
+    const [itemsPerPage] = useState(7); // Số mục trên mỗi trang
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Users"), (snapshot) => {

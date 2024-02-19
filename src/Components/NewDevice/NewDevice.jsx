@@ -5,6 +5,9 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { Devices } from "../../formSoure";
 import { BsImage } from 'react-icons/bs';
+import { MdClose } from 'react-icons/md'; // Import MdClose icon
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router";
 
 
@@ -62,12 +65,14 @@ const NewDevice = () => {
         try {
             await addDoc(valueData,{
                 ...data,
+                timestamp: serverTimestamp(),
             })
             navigate(-1)
         } catch (error) {
             console.log(error)
         }
     }
+
     return (
         <div className="formbold-main-wrapper">
             <div className="formbold-form-wrapper">
@@ -96,7 +101,7 @@ const NewDevice = () => {
                         />
                     </div>
 
-                    <button className="formbold-btn" type="submit" disabled={per !== null && per < 100}>
+                    <button className="formbold-btn" type="submit" onClick={handleADD} disabled={per !== null && per < 100}>
                         ADD
                     </button>
                 </form>

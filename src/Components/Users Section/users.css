@@ -179,7 +179,7 @@ td {
   padding: 0.8rem 1rem;
   color: white;
   background-color: #44b478;
-  margin-left: 10px;
+  margin: 0 5px;
 }
 
 .btnp:hover {
@@ -188,8 +188,10 @@ td {
 }
 
 .pagination {
-  margin-left: 1348px;
-  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 200px;
+  margin-top: 15px;
 }
 
 ::-webkit-scrollbar {
