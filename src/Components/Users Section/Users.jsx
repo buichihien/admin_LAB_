@@ -170,6 +170,7 @@ const Users = () => {
                     </tbody>
                 </table>
             </div>
+            {/* Phân trang */}
             <div className="pagination">
                 {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map((_, index) => (
                     <button className="btnp" key={index} onClick={() => paginate(index + 1)}>

@@ -10,6 +10,8 @@ import { db } from "../../firebase";
 const Users = () => {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(7); // Số mục trên mỗi trang
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Room"), (snapshot) => {
             let list = [];
@@ -41,6 +43,31 @@ const Users = () => {
         const deleteVal = doc(db, "Room", id)
         await deleteDoc(deleteVal)
     }
+
+    // Tính toán phạm vi dữ liệu hiển thị trên trang hiện tại
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Logic phân trang và hiển thị dữ liệu
+    const renderData = currentItems
+        .filter(item => search === '' || item.username.toLowerCase().includes(search))
+        .map((data, index) => (
+            <tr key={data.id}>
+                <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                <td><img id="imgUser" src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt="user" /></td>
+                <td>{data.username}</td>
+                <td>{data.email}</td>
+                <td>{data.phone}</td>
+                <td>{data.role}</td>
+                <td>                                       
+                    <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
+                </td>
+            </tr>
+        ));
+
+    // Logic xử lý chuyển trang
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div className="mainContent">
@@ -89,6 +116,14 @@ const Users = () => {
                         })}
                     </tbody>
                 </table>
+            </div>
+            {/* Phân trang */}
+            <div className="pagination">
+                {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map((_, index) => (
+                    <button className="btnp" key={index} onClick={() => paginate(index + 1)}>
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </div>
     )

@@ -76,7 +76,7 @@ const NewDevice = () => {
     return (
         <div className="formbold-main-wrapper">
             <div className="formbold-form-wrapper">
-                <h1>Add User</h1>
+                <h1>Add Device</h1>
                 <form onSubmit={handleADD}>
                     {Devices.map((input) => (<div className="formbold-input-flex" key={input.id}>
                         <div>
