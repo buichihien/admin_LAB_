@@ -9,6 +9,7 @@ import Body from "./Components/Body Section/Body";
 import Devices from "./Components/Devices Section/Devices";
 import Room from "./Components/Room Section/Room";
 import BookingRoom from "./Components/BookingRoom/BookingRoom";
+import BorrowDevice from "./Components/BorrowDeviceSection/BorrowDevice"
 
 const App = () => {
     const { currentUser } = useContext(AuthContext);
@@ -29,6 +30,10 @@ const App = () => {
                         <Route
                             path="/devices"
                             element={<Devices />}
+                        />
+                        <Route
+                            path="/BorrowDevice"
+                            element={<BorrowDevice />}
                         />
                         <Route
                             path="/room"
