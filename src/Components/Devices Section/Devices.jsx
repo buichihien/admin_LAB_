@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
+
 const Devices = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
@@ -67,6 +68,7 @@ const Devices = () => {
     // Logic xử lý chuyển trang
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
+    
     return (
         <div className="mainContent">
             <div className="top">
