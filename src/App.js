@@ -9,7 +9,7 @@ import Body from "./Components/Body Section/Body";
 import Devices from "./Components/Devices Section/Devices";
 import Room from "./Components/Room Section/Room";
 import BookingRoom from "./Components/BookingRoom/BookingRoom";
-import BorrowDevice from "./Components/BorrowDeviceSection/BorrowDevice"
+import BorrowDevice from "./Components/BorrowDevice Section/BorrowDevice";
 
 const App = () => {
     const { currentUser } = useContext(AuthContext);
@@ -32,7 +32,7 @@ const App = () => {
                             element={<Devices />}
                         />
                         <Route
-                            path="/BorrowDevice"
+                            path="/borrowDevice"
                             element={<BorrowDevice />}
                         />
                         <Route

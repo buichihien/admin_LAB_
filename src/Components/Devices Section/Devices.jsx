@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./devices.css";
 import { FcSearch } from "react-icons/fc";
-import { collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { collection, onSnapshot, updateDoc, doc, addDoc } from "firebase/firestore";
+import { auth,db } from "../../firebase";
+import { serverTimestamp } from "firebase/firestore";
+import { format } from "date-fns";
 
 const Devices = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
+    const [userEmail, setUserEmail] = useState("");
     const [borrowQuantities, setBorrowQuantities] = useState({}); // Sử dụng object để lưu trữ từng quantity riêng lẻ
+    const valueData = collection(db, "Borrow");
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Device"), (snapshot) => {
@@ -23,6 +27,19 @@ const Devices = () => {
 
         return () => {
             unsub();
+        };
+    }, []);
+
+    // lấy user đang đăng nhập
+    useEffect(() => {
+        // Get the current user when the component mounts
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setUserEmail(user.email);
+            }
+        });
+        return () => {
+            unsubscribe();
         };
     }, []);
 
@@ -42,6 +59,22 @@ const Devices = () => {
 
             // Thực hiện các hành động khác nếu cần
             console.log(`Borrowed ${quantityToBorrow} items from device with ID ${productId}`);
+            
+            try {
+                // Định dạng thời gian thành ngày tháng năm
+                const formattedDate = format(new Date(), "dd-MM-yyyy");
+
+                // Thêm dữ liệu vào bảng "Borrow" với thời gian và ngày hiện tại
+                await addDoc(valueData, {
+                    userEmail,
+                    date: formattedDate,
+                    time: new Date().toLocaleTimeString(),
+                    deviceName: device.devicename,
+                    quantity: quantityToBorrow,
+                });
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             alert("Please enter a valid quantity to borrow.");
         }

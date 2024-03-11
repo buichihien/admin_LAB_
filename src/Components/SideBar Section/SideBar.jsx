@@ -40,10 +40,10 @@ const SideBar = () => {
                     </li>
 
                     <li className="listItem">
-                        <Link to="/borrow" className='menuLink flex'>
+                        <Link to="/borrowDevice" className='menuLink flex'>
                             <AiFillAndroid className="icon" />
                             <span className="smallText">
-                            Borrow equipment
+                            BorrowDevice
                             </span>
                         </Link>
 
