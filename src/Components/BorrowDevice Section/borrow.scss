@@ -139,6 +139,22 @@ td {
     text-align: center;
 }
 
+.status-cell {
+    display: flex;
+    align-items: center;
+}
+
+.status-cell span {
+    margin-right: 10px; /* Thêm khoảng cách giữa trạng thái và nút xóa */
+}
+
+.action-cell {
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung của cột "Action" */
+}
+
+
+
 .searchBar {
     padding: 1rem 2rem;
     background: var(--whiteColor);

@@ -78,7 +78,8 @@ const BorrowDevice = () => {
                                     <td>{data.quantity}</td>
                                     <td>{data.time}</td>
                                     <td>{data.date}</td>
-                                    <td>
+                                    <td className="status-cell">
+                                        <span>{data.status}</span>
                                         <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
                                 </tr>
