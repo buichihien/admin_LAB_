@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./devices.css";
 import { FcSearch } from "react-icons/fc";
-import { collection, onSnapshot, updateDoc, doc, addDoc } from "firebase/firestore";
+import { collection, onSnapshot, updateDoc, doc, addDoc, getDocs } from "firebase/firestore";
 import { auth,db } from "../../firebase";
 import { serverTimestamp } from "firebase/firestore";
 import { format } from "date-fns";
@@ -71,12 +71,42 @@ const Devices = () => {
                     time: new Date().toLocaleTimeString(),
                     deviceName: device.devicename,
                     quantity: quantityToBorrow,
+                    status: "Đã mượn",
                 });
             } catch (error) {
                 console.log(error);
             }
         } else {
             alert("Please enter a valid quantity to borrow.");
+        }
+    };
+
+
+    const handleReturn = async (productId) => {
+        // Lấy dữ liệu của thiết bị
+        const device = data.find(item => item.id === productId);
+        
+        // Tìm tài liệu Borrow tương ứng trong Firestore
+        const borrowRef = collection(db, "Borrow");
+        const snapshot = await getDocs(borrowRef);
+
+        let borrowedDevice = null;
+
+        snapshot.forEach((doc) => {
+            if (doc.data().deviceName === device.devicename && doc.data().userEmail === userEmail && doc.data().status === "Đã mượn") {
+                borrowedDevice = { ...doc.data(), id: doc.id };
+            }
+        });
+
+        if (borrowedDevice) {
+            const deviceRef = doc(db, "Device", productId);
+            await updateDoc(deviceRef, { quantity: device.quantity + borrowedDevice.quantity });
+
+            // Cập nhật trạng thái tài liệu Borrow thành "Đã trả"
+            const borrowDocRef = doc(db, "Borrow", borrowedDevice.id);
+            await updateDoc(borrowDocRef, { status: "Đã trả" });
+        } else {
+            alert("No borrowed record found for this device.");
         }
     };
 
@@ -128,6 +158,12 @@ const Devices = () => {
                                                 onClick={() => handleBorrow(data.id)}
                                             >
                                                 Borrow
+                                            </button>                                            
+                                            <button
+                                                className="form-button return-button"
+                                                onClick={() => handleReturn(data.id)}
+                                            >
+                                                Return
                                             </button>
                                         </div>
                                     </td>

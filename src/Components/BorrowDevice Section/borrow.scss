@@ -162,6 +162,24 @@ td {
     }
 }
 
+/* CSS cho nút Return */
+.return-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #dc3545; /* Màu nền của nút Return */
+}
+
+.return-button:hover {
+    background-color: #c82333; /* Màu nền khi hover */
+}
+
+/* Các kiểu dáng khác tùy thuộc vào thiết kế của bạn */
+
+
 ::-webkit-scrollbar {
     width: 6px;
 }

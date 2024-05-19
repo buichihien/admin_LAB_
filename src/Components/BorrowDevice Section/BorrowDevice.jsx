@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./borrow.css";
 import { FcSearch } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 
 const BorrowDevice = () => {
@@ -48,7 +48,7 @@ const BorrowDevice = () => {
         return () => {
             unsub();
         };
-    }, [userEmail]);
+    }, [userEmail]);    
 
     return (
         <div className="mainContent">
@@ -85,9 +85,7 @@ const BorrowDevice = () => {
                                     <td>{borrow.quantity}</td>
                                     <td>{borrow.time}</td>
                                     <td>{borrow.date}</td>
-                                    {/* <td>
-                                        <button onClick={() => handleReturn(item.id)}>Return</button>
-                                    </td> */}
+                                    <td>{borrow.status}</td>
                                 </tr>
                             );
                         })}
