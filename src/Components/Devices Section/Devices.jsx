@@ -24,9 +24,9 @@ const Devices = () => {
             });
             setData(list);
         },
-        (err) => {
-            console.log(err);
-        });
+            (err) => {
+                console.log(err);
+            });
         return () => {
             unsub();
         };
@@ -59,7 +59,7 @@ const Devices = () => {
                 <td>{data.email}</td>
                 <td>{data.phone}</td>
                 <td>{data.role}</td>
-                <td>                                       
+                <td>
                     <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
                 </td>
             </tr>
@@ -68,7 +68,7 @@ const Devices = () => {
     // Logic xử lý chuyển trang
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
-    
+
     return (
         <div className="mainContent">
             <div className="top">
@@ -128,20 +128,23 @@ const Devices = () => {
                                     <td>{item.seri}</td>
                                     <td>
                                         {item.quantity}
-                                        <button
-                                            className="quantity-button"
-                                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                        >
-                                            <FontAwesomeIcon icon={faPlus} />
-                                        </button>
-                                        <button
-                                            className="quantity-button"
-                                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                            disabled={item.quantity === 0}
-                                        >
-                                            <FontAwesomeIcon icon={faMinus} />
-                                        </button>                                      
-                                    </td>                                  
+                                        <div className="quantity-controls">
+                                            <button
+                                                className="quantity-button"
+                                                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                            >
+                                                <FontAwesomeIcon icon={faPlus} />
+                                            </button>
+                                            <button
+                                                className="quantity-button"
+                                                onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                                disabled={item.quantity === 0}
+                                            >
+                                                <FontAwesomeIcon icon={faMinus} />
+                                            </button>
+                                        </div>
+                                    </td>
+
                                     <td>
                                         <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>

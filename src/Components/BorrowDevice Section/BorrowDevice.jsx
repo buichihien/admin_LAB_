@@ -3,12 +3,13 @@ import "./borrow.css";
 import { FcSearch } from "react-icons/fc";
 import { RiChatDeleteFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { collection, deleteDoc, doc, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const BorrowDevice = () => {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
+
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Borrow"), (snapshot) => {
             let list = [];
@@ -16,36 +17,46 @@ const BorrowDevice = () => {
                 list.push({ id: doc.id, ...doc.data() });
             });
             list.sort((a, b) => {
-                // Compare dates first
                 const dateComparison = a.date.localeCompare(b.date);
                 if (dateComparison !== 0) {
                     return dateComparison;
                 }
-    
-                // If dates are equal, compare times
                 return a.time.localeCompare(b.time);
-            });    
+            });
             setData(list);
         },
             (err) => {
                 console.log(err);
-            }
-        );
-        return()=>{
+            });
+        return () => {
             unsub();
         };
-    }, [])
+    }, []);
 
     const handleDelete = async (id) => {
         const deleteVal = doc(db, "Borrow", id);
         await deleteDoc(deleteVal);
     };
 
+    const handleReturn = async (borrowData) => {
+        const borrowRef = doc(db, "Borrow", borrowData.id);
+        const deviceQuery = await getDocs(collection(db, "Device"));
+        const deviceData = deviceQuery.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const device = deviceData.find(item => item.devicename === borrowData.deviceName);
+
+        if (device) {
+            const deviceRef = doc(db, "Device", device.id);
+            await updateDoc(deviceRef, { quantity: device.quantity + borrowData.quantity });
+        }
+
+        await updateDoc(borrowRef, { status: "Returned" });
+    };
+
     return (
         <div className="mainContent">
             <div className="top">
                 <div className="searchBar flex">
-                    <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)}/>
+                    <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)} />
                     <FcSearch className="icon" />
                 </div>
                 <div><button><Link to="/bookingRoom">Add Book</Link></button></div>
@@ -65,23 +76,42 @@ const BorrowDevice = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.filter((data)=>{
+                        {data.filter((data) => {
                             return search.toLowerCase() === ''
-                            ? data
-                            :  data.class.toLowerCase().includes(search);
+                                ? data
+                                : data.deviceName.toLowerCase().includes(search);
                         }).map((data, index) => {
                             return (
                                 <tr key={data.id}>
-                                    <td>{index+1}</td>
-                                    <td>{data.deviceName}</td>                                
+                                    <td>{index + 1}</td>
+                                    <td>{data.deviceName}</td>
                                     <td>{data.userEmail}</td>
                                     <td>{data.quantity}</td>
                                     <td>{data.time}</td>
                                     <td>{data.date}</td>
                                     <td className="status-cell">
-                                        <span>{data.status}</span>
-                                        <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
+                                        <div>
+                                            {data.status === "Đã mượn" ? (
+                                                <button
+                                                    className="borrowed"
+                                                    onClick={() => handleReturn(data)}
+                                                >
+                                                    Đang mượn
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="returned"
+                                                    onClick={() => handleReturn(data)}
+                                                >
+                                                    Đã trả
+                                                </button>
+                                            )}
+                                        </div>
+                                        <button onClick={() => handleDelete(data.id)}>
+                                            <RiChatDeleteFill className="icon2" />
+                                        </button>
                                     </td>
+
                                 </tr>
                             )
                         })}
@@ -92,4 +122,4 @@ const BorrowDevice = () => {
     )
 }
 
-export default BorrowDevice
+export default BorrowDevice;

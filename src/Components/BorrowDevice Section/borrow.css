@@ -166,6 +166,23 @@ td {
   color: var(--PrimaryColor);
 }
 
+.status-cell button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.status-cell .borrowed {
+  background-color: green;
+  color: white;
+}
+
+.status-cell .returned {
+  background-color: red;
+  color: white;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
