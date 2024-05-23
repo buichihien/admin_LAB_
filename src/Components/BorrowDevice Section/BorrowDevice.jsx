@@ -85,7 +85,9 @@ const BorrowDevice = () => {
                                     <td>{borrow.quantity}</td>
                                     <td>{borrow.time}</td>
                                     <td>{borrow.date}</td>
-                                    <td>{borrow.status}</td>
+                                    <td>
+                                        {borrow.status}
+                                    </td>
                                 </tr>
                             );
                         })}

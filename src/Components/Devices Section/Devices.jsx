@@ -46,24 +46,19 @@ const Devices = () => {
     const handleBorrow = async (productId) => {
         // Lấy dữ liệu của thiết bị
         const device = data.find(item => item.id === productId);
-
+    
         // Kiểm tra nếu borrowQuantity là số hợp lệ và nhỏ hơn hoặc bằng quantity
         const quantityToBorrow = parseInt(borrowQuantities[productId], 10);
         if (!isNaN(quantityToBorrow) && quantityToBorrow > 0 && quantityToBorrow <= device.quantity) {
             // Cập nhật quantity trong Firestore
             const deviceRef = doc(db, "Device", productId);
             await updateDoc(deviceRef, { quantity: device.quantity - quantityToBorrow });
-
-            // Reset borrowQuantity cho thiết bị cụ thể
-            setBorrowQuantities(prevState => ({ ...prevState, [productId]: "" }));
-
-            // Thực hiện các hành động khác nếu cần
-            console.log(`Borrowed ${quantityToBorrow} items from device with ID ${productId}`);
-            
+    
+            // Thêm dữ liệu vào bảng "Borrow" với thời gian và ngày hiện tại
             try {
                 // Định dạng thời gian thành ngày tháng năm
                 const formattedDate = format(new Date(), "dd-MM-yyyy");
-
+    
                 // Thêm dữ liệu vào bảng "Borrow" với thời gian và ngày hiện tại
                 await addDoc(valueData, {
                     userEmail,
@@ -73,6 +68,12 @@ const Devices = () => {
                     quantity: quantityToBorrow,
                     status: "Đã mượn",
                 });
+    
+                // Reset borrowQuantity cho thiết bị cụ thể
+                setBorrowQuantities(prevState => ({ ...prevState, [productId]: "" }));
+    
+                // Thực hiện các hành động khác nếu cần
+                console.log(`Borrowed ${quantityToBorrow} items from device with ID ${productId}`);
             } catch (error) {
                 console.log(error);
             }
@@ -80,36 +81,7 @@ const Devices = () => {
             alert("Please enter a valid quantity to borrow.");
         }
     };
-
-
-    const handleReturn = async (productId) => {
-        // Lấy dữ liệu của thiết bị
-        const device = data.find(item => item.id === productId);
-        
-        // Tìm tài liệu Borrow tương ứng trong Firestore
-        const borrowRef = collection(db, "Borrow");
-        const snapshot = await getDocs(borrowRef);
-
-        let borrowedDevice = null;
-
-        snapshot.forEach((doc) => {
-            if (doc.data().deviceName === device.devicename && doc.data().userEmail === userEmail && doc.data().status === "Đã mượn") {
-                borrowedDevice = { ...doc.data(), id: doc.id };
-            }
-        });
-
-        if (borrowedDevice) {
-            const deviceRef = doc(db, "Device", productId);
-            await updateDoc(deviceRef, { quantity: device.quantity + borrowedDevice.quantity });
-
-            // Cập nhật trạng thái tài liệu Borrow thành "Đã trả"
-            const borrowDocRef = doc(db, "Borrow", borrowedDevice.id);
-            await updateDoc(borrowDocRef, { status: "Đã trả" });
-        } else {
-            alert("No borrowed record found for this device.");
-        }
-    };
-
+    
     return (
         <div className="mainContent">
             <div className="top">
@@ -159,12 +131,6 @@ const Devices = () => {
                                             >
                                                 Borrow
                                             </button>                                            
-                                            <button
-                                                className="form-button return-button"
-                                                onClick={() => handleReturn(data.id)}
-                                            >
-                                                Return
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>

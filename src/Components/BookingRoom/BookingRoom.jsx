@@ -53,14 +53,14 @@ const BookingRoom = () => {
         const id = e.target.id;
         const value = e.target.value;
 
-        setData({ ...data, [id]: value , userEmail});
+        setData({ ...data, [id]: value, userEmail });
     }
 
     const handleADD = async (e) => {
         e.preventDefault()
         try {
             const formattedDate = formatDate(date);
-            await addDoc(valueData, { ...data, date: formattedDate, time, userEmail});
+            await addDoc(valueData, { ...data, date: formattedDate, time, userEmail });
             navigate(-1)
         } catch (error) {
             console.log(error)
@@ -70,7 +70,7 @@ const BookingRoom = () => {
     return (
         <div className="formbold-main-wrapper">
             <div className="formbold-form-wrapper">
-                <h1>Add User</h1>
+                <h1>Add book</h1>
                 <form onSubmit={handleADD}>
                     {Room.map((input) => (<div className="formbold-input-flex" key={input.id}>
                         <div>
