@@ -130,9 +130,10 @@ const Users = () => {
                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td><img id="imgUser" src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} alt="user" /></td>
                 <td>{data.username}</td>
+                <td>{data.mssv}</td>
+                <td>{data.class}</td>
                 <td>{data.email}</td>
                 <td>{data.phone}</td>
-                <td>{data.role}</td>
                 <td>                                       
                     <button onClick={() => handleDelete(data.id)}><RiChatDeleteFill className="icon2" /></button>
                 </td>
@@ -158,10 +159,11 @@ const Users = () => {
                         <tr>
                             <th>S No.</th>
                             <th>Image</th>
-                            <th>Username</th>
+                            <th>Full name</th>
+                            <th>MSSV</th>
+                            <th>Class</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
