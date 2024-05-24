@@ -52,6 +52,7 @@ const Users = () => {
                             <th>S No.</th>
                             <th>Name</th>
                             <th>Class</th>
+                            <th>MSSV</th>
                             <th>Phone</th>
                             <th>DateBooking</th>
                             <th>TimeBooking</th>
@@ -68,6 +69,7 @@ const Users = () => {
                                     <td>{index+1}</td>
                                     <td>{data.username}</td>
                                     <td>{data.class}</td>
+                                    <td>{data.mssv}</td>
                                     <td>{data.phone}</td>
                                     <td>{data.date}</td>
                                     <td>{data.time}</td>
