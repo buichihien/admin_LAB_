@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./borrow.css";
 import { FcSearch } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { collection, onSnapshot, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 
 const BorrowDevice = () => {
@@ -48,13 +48,13 @@ const BorrowDevice = () => {
         return () => {
             unsub();
         };
-    }, [userEmail]);    
+    }, [userEmail]);
 
     return (
         <div className="mainContent">
             <div className="top">
                 <div className="searchBar flex">
-                    <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)} />
+                    <input type="text" placeholder="Search Devices" onChange={(e) => setSearch(e.target.value)} />
                     <FcSearch className="icon" />
                 </div>
                 <div><button><Link to="/bookingRoom">Add Book</Link></button></div>
@@ -65,8 +65,10 @@ const BorrowDevice = () => {
                     <thead>
                         <tr>
                             <th>S No.</th>
-                            <th>Name device</th>
-                            <th>Email</th>
+                            <th>User Name</th>
+                            <th>Class</th>
+                            <th>MSSV</th>
+                            <th>Name Device</th>
                             <th>Quantity</th>
                             <th>Time</th>
                             <th>Date</th>
@@ -80,14 +82,14 @@ const BorrowDevice = () => {
                             return (
                                 <tr key={borrow.id}>
                                     <td>{index + 1}</td>
+                                    <td>{borrow.userName}</td>
+                                    <td>{borrow.userClass}</td>
+                                    <td>{borrow.userMSSV}</td>
                                     <td>{borrow.deviceName}</td>
-                                    <td>{borrow.userEmail}</td>
                                     <td>{borrow.quantity}</td>
                                     <td>{borrow.time}</td>
                                     <td>{borrow.date}</td>
-                                    <td>
-                                        {borrow.status}
-                                    </td>
+                                    <td>{borrow.status}</td>
                                 </tr>
                             );
                         })}

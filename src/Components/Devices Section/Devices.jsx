@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./devices.css";
 import { FcSearch } from "react-icons/fc";
-import { collection, onSnapshot, updateDoc, doc, addDoc, getDocs } from "firebase/firestore";
-import { auth,db } from "../../firebase";
-import { serverTimestamp } from "firebase/firestore";
+import { collection, onSnapshot, updateDoc, doc, addDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 import { format } from "date-fns";
 
 const Devices = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
-    const [userEmail, setUserEmail] = useState("");
-    const [borrowQuantities, setBorrowQuantities] = useState({}); // Sử dụng object để lưu trữ từng quantity riêng lẻ
+    const [userDetails, setUserDetails] = useState({ email: "", userName: "", userClass: "", userMSSV: "" });
+    const [borrowQuantities, setBorrowQuantities] = useState({});
     const valueData = collection(db, "Borrow");
 
     useEffect(() => {
@@ -30,49 +29,58 @@ const Devices = () => {
         };
     }, []);
 
-    // lấy user đang đăng nhập
+    // Lấy thông tin người dùng đang đăng nhập
     useEffect(() => {
-        // Get the current user when the component mounts
-        const unsubscribe = auth.onAuthStateChanged((user) => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
-                setUserEmail(user.email);
+                const userEmail = user.email;
+                // Giả sử bạn có một bộ sưu tập "Users" chứa thông tin chi tiết của người dùng
+                const userDoc = doc(db, "Users", user.uid);
+                const docSnap = await getDoc(userDoc);
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    setUserDetails({
+                        email: userEmail,
+                        userName: userData.username, // Điều chỉnh cho phù hợp với cấu trúc dữ liệu của bạn
+                        userClass: userData.class, // Điều chỉnh cho phù hợp với cấu trúc dữ liệu của bạn
+                        userMSSV: userData.mssv // Điều chỉnh cho phù hợp với cấu trúc dữ liệu của bạn
+                    });
+                } else {
+                    console.log("No such document!");
+                }
             }
         });
+
         return () => {
             unsubscribe();
         };
     }, []);
 
     const handleBorrow = async (productId) => {
-        // Lấy dữ liệu của thiết bị
         const device = data.find(item => item.id === productId);
-    
-        // Kiểm tra nếu borrowQuantity là số hợp lệ và nhỏ hơn hoặc bằng quantity
+
         const quantityToBorrow = parseInt(borrowQuantities[productId], 10);
         if (!isNaN(quantityToBorrow) && quantityToBorrow > 0 && quantityToBorrow <= device.quantity) {
-            // Cập nhật quantity trong Firestore
             const deviceRef = doc(db, "Device", productId);
             await updateDoc(deviceRef, { quantity: device.quantity - quantityToBorrow });
-    
-            // Thêm dữ liệu vào bảng "Borrow" với thời gian và ngày hiện tại
+
             try {
-                // Định dạng thời gian thành ngày tháng năm
                 const formattedDate = format(new Date(), "dd-MM-yyyy");
-    
-                // Thêm dữ liệu vào bảng "Borrow" với thời gian và ngày hiện tại
+
                 await addDoc(valueData, {
-                    userEmail,
+                    userEmail: userDetails.email,
+                    userName: userDetails.userName,
+                    userClass: userDetails.userClass,
+                    userMSSV: userDetails.userMSSV,
                     date: formattedDate,
                     time: new Date().toLocaleTimeString(),
                     deviceName: device.devicename,
                     quantity: quantityToBorrow,
-                    status: "Đã mượn",
+                    status: "Đã mượn"
                 });
-    
-                // Reset borrowQuantity cho thiết bị cụ thể
+
                 setBorrowQuantities(prevState => ({ ...prevState, [productId]: "" }));
-    
-                // Thực hiện các hành động khác nếu cần
+
                 console.log(`Borrowed ${quantityToBorrow} items from device with ID ${productId}`);
             } catch (error) {
                 console.log(error);
@@ -81,7 +89,7 @@ const Devices = () => {
             alert("Please enter a valid quantity to borrow.");
         }
     };
-    
+
     return (
         <div className="mainContent">
             <div className="top">
@@ -130,7 +138,7 @@ const Devices = () => {
                                                 onClick={() => handleBorrow(data.id)}
                                             >
                                                 Borrow
-                                            </button>                                            
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 .mainContent {
   width: 82%;
@@ -193,4 +194,48 @@
   .formbold-btn {
     margin-left: 65px;
   }
+}
+select.time option:disabled {
+  color: red;
+}
+
+.slots {
+  margin-top: 20px;
+}
+
+.slot.booked {
+  color: red;
+  cursor: not-allowed;
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.slot {
+  flex: 1 0 17%; /* Mỗi label chiếm 20% chiều rộng của flex container */
+  margin: 5px;
+  white-space: nowrap; /* Không cho label xuống dòng */
+}
+
+.slot input {
+  margin-right: 5px;
+}
+
+.time-of-day {
+  color: blue;
+}
+
+.time-of-day1 {
+  color: green;
+}
+
+.slots-legend {
+  margin-top: 20px;
+  display: flex;
+}
+
+.slot-legend {
+  margin: 10px;
 }/*# sourceMappingURL=bookingRoom.css.map */
