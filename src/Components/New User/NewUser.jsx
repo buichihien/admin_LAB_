@@ -3,7 +3,7 @@ import "./newUser.scss";
 import { auth, db, storage } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, setDoc, query, where, getDocs } from "firebase/firestore";
 import { Users } from "../../formSoure";
 import { BsImage } from 'react-icons/bs';
 import { useNavigate } from "react-router";
@@ -13,6 +13,7 @@ const NewUser = () => {
     const [file, setFile] = useState("");
     const [data, setData] = useState({});
     const [per, setPerc] = useState(null);
+    const [error, setError] = useState("");
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -60,6 +61,33 @@ const NewUser = () => {
     const handleADD = async (e) => {
         e.preventDefault()
         try {
+            // Kiểm tra độ dài mật khẩu
+            if (data.password.length < 6) {
+                alert("Mật khẩu phải có ít nhất 6 ký tự");
+                return;
+            }
+
+            if (data.phone.length < 11) {
+                alert("Mật khẩu phải có ít nhất 11 số");
+                return;
+            }
+
+            // thông báo lỗi trùng email
+            const q = query(collection(db, "Users"), where("email", "==", data.email));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                alert("Email đã được sử dụng");
+                return;
+            }
+
+            // thông báo lỗi trùng email
+            const q_mssv = query(collection(db, "Users"), where("mssv", "==", data.mssv));
+            const querySnapshot_mssv = await getDocs(q_mssv);
+            if (!querySnapshot_mssv.empty) {
+                alert("Mã số sinh viên đã được sử dụng");
+                return;
+            }
+
             const res = await createUserWithEmailAndPassword(
                 auth,
                 data.email,
@@ -71,7 +99,8 @@ const NewUser = () => {
             });
             navigate(-1)
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setError(error.message);
         }
     }
 

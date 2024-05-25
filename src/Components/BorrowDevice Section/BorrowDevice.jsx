@@ -59,7 +59,7 @@ const BorrowDevice = () => {
                     <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)} />
                     <FcSearch className="icon" />
                 </div>
-                <div><button><Link to="/bookingRoom">Add Book</Link></button></div>
+                <div><button><Link to="/bookingRoom">Add Booking</Link></button></div>
             </div>
 
             <div className="header_fixed">

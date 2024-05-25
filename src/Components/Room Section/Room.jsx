@@ -76,7 +76,7 @@ const Users = () => {
                     <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)}/>
                     <FcSearch className="icon" />
                 </div>
-                <div><button><Link to="/bookingRoom">Add Book</Link></button></div>
+                <div><button><Link to="/bookingRoom">Add Booking</Link></button></div>
             </div>
 
             <div className="header_fixed">
@@ -84,8 +84,9 @@ const Users = () => {
                     <thead>
                         <tr>
                             <th>S No.</th>
-                            <th>Name</th>
                             <th>EmailUser</th>
+                            <th>Full Name</th>
+                            <th>MSSV</th>
                             <th>Class</th>
                             <th>Phone</th>
                             <th>DateBooking</th>
@@ -102,8 +103,9 @@ const Users = () => {
                             return (
                                 <tr key={data.id}>
                                     <td>{index+1}</td>
-                                    <td>{data.username}</td>
                                     <td>{data.userEmail}</td>
+                                    <td>{data.username}</td>
+                                    <td>{data.mssv}</td>
                                     <td>{data.class}</td>
                                     <td>{data.phone}</td>
                                     <td>{data.date}</td>
