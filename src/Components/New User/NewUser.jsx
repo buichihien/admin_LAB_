@@ -67,6 +67,11 @@ const NewUser = () => {
                 return;
             }
 
+            if (data.phone.length < 11) {
+                alert("Mật khẩu phải có ít nhất 11 số");
+                return;
+            }
+
             // thông báo lỗi trùng email
             const q = query(collection(db, "Users"), where("email", "==", data.email));
             const querySnapshot = await getDocs(q);
