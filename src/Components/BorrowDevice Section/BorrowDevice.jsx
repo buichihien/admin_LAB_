@@ -49,7 +49,7 @@ const BorrowDevice = () => {
             await updateDoc(deviceRef, { quantity: device.quantity + borrowData.quantity });
         }
 
-        await updateDoc(borrowRef, { status: "Returned" });
+        await updateDoc(borrowRef, { status: "Đã trả" });
     };
 
     return (
@@ -67,8 +67,10 @@ const BorrowDevice = () => {
                     <thead>
                         <tr>
                             <th>S No.</th>
+                            <th>User Name</th>
+                            <th>Class</th>
+                            <th>MSSV</th>
                             <th>Name device</th>
-                            <th>Email</th>
                             <th>Quantity</th>
                             <th>Time</th>
                             <th>Date</th>
@@ -84,8 +86,10 @@ const BorrowDevice = () => {
                             return (
                                 <tr key={data.id}>
                                     <td>{index + 1}</td>
+                                    <td>{data.userName}</td>
+                                    <td>{data.userClass}</td>
+                                    <td>{data.userMSSV}</td>
                                     <td>{data.deviceName}</td>
-                                    <td>{data.userEmail}</td>
                                     <td>{data.quantity}</td>
                                     <td>{data.time}</td>
                                     <td>{data.date}</td>
