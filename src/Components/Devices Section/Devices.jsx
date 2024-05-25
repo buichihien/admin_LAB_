@@ -38,9 +38,20 @@ const Devices = () => {
     };
 
     const handleQuantityChange = async (productId, newQuantity) => {
+        // Cập nhật số lượng trên state
+        const newData = data.map(item => {
+            if (item.id === productId) {
+                return { ...item, quantity: newQuantity };
+            }
+            return item;
+        });
+        setData(newData);
+
         // Cập nhật số lượng trên Firebase
         const docRef = doc(db, "Device", productId);
-        await setDoc(docRef, { quantity: newQuantity }, { merge: true });
+        if (newQuantity >= 0) {
+            await setDoc(docRef, { quantity: newQuantity }, { merge: true });
+        }
     };
 
     // Tính toán phạm vi dữ liệu hiển thị trên trang hiện tại
@@ -127,24 +138,19 @@ const Devices = () => {
                                     <td>{item.devicename}</td>
                                     <td>{item.seri}</td>
                                     <td>
-                                        {item.quantity}
-                                        <div className="quantity-controls">
-                                            <button
-                                                className="quantity-button"
-                                                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                            >
-                                                <FontAwesomeIcon icon={faPlus} />
-                                            </button>
-                                            <button
-                                                className="quantity-button"
-                                                onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                                disabled={item.quantity === 0}
-                                            >
-                                                <FontAwesomeIcon icon={faMinus} />
+                                        <div className="quantity-input-container">
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                value={item.quantity}
+                                                onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                                                className="quantity-input"
+                                            />
+                                            <button onClick={() => handleQuantityChange(item.id, item.quantity)} className="save-button">
+                                                Lưu
                                             </button>
                                         </div>
                                     </td>
-
                                     <td>
                                         <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>

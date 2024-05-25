@@ -166,6 +166,12 @@ td {
   color: var(--PrimaryColor);
 }
 
+.status-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .status-cell button {
   padding: 5px 10px;
   border: none;

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 td img#imgDevices {
   width: 100px;
   height: 100px;
@@ -8,4 +9,56 @@ button.quantity-button {
   font-size: 16px;
   padding: 1px;
   margin: 0px 10px;
+}
+
+.quantity-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-input {
+  flex: 1;
+  margin-right: 10px;
+  max-width: 100px; /* Để tạo khoảng cách giữa input và nút Lưu */
+}
+
+.save-button {
+  /* Thiết lập các thuộc tính CSS cho nút Lưu */
+}
+
+.quantity-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-input {
+  flex: 1;
+  margin-right: 10px; /* Để tạo khoảng cách giữa input và nút Lưu */
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.save-button {
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.save-button:active {
+  background-color: #004494;
+  transform: translateY(0);
 }/*# sourceMappingURL=devices.css.map */
