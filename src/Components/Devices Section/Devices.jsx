@@ -20,9 +20,9 @@ const Devices = () => {
             });
             setData(list);
         },
-        (err) => {
-            console.log(err);
-        });
+            (err) => {
+                console.log(err);
+            });
 
         return () => {
             unsub();
@@ -61,12 +61,9 @@ const Devices = () => {
 
         const quantityToBorrow = parseInt(borrowQuantities[productId], 10);
         if (!isNaN(quantityToBorrow) && quantityToBorrow > 0 && quantityToBorrow <= device.quantity) {
-            const deviceRef = doc(db, "Device", productId);
-            await updateDoc(deviceRef, { quantity: device.quantity - quantityToBorrow });
+            const formattedDate = format(new Date(), "dd-MM-yyyy");
 
             try {
-                const formattedDate = format(new Date(), "dd-MM-yyyy");
-
                 await addDoc(valueData, {
                     userEmail: userDetails.email,
                     userName: userDetails.userName,
@@ -76,7 +73,7 @@ const Devices = () => {
                     time: new Date().toLocaleTimeString(),
                     deviceName: device.devicename,
                     quantity: quantityToBorrow,
-                    status: "Đã mượn"
+                    status: "Yêu cầu" // Trạng thái mặc định khi yêu cầu được thêm vào
                 });
 
                 setBorrowQuantities(prevState => ({ ...prevState, [productId]: "" }));
@@ -89,6 +86,7 @@ const Devices = () => {
             alert("Please enter a valid quantity to borrow.");
         }
     };
+
 
     return (
         <div className="mainContent">
