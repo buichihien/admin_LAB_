@@ -177,29 +177,81 @@ td {
     }
 }
 
-.status-cell {
+/* Màu xanh dương cho nút Yêu cầu */
+.button.yc {
+    background-color: #007bff; /* Xanh dương */
+    color: #fff; /* Màu chữ trắng */
+}
+
+/* Màu cam cho nút Đã duyệt */
+.button.ddy {
+    background-color: #fd7e14; /* Cam */
+    color: #fff; /* Màu chữ trắng */
+}
+
+/* Màu xanh lá cho nút Đang mượn */
+.button.dmg {
+    background-color: #28a745; /* Xanh lá */
+    color: #fff; /* Màu chữ trắng */
+}
+
+/* Màu đỏ cho nút Đã trả */
+.button.dtr {
+    background-color: #dc3545; /* Đỏ */
+    color: #fff; /* Màu chữ trắng */
+}
+
+/* Màu đỏ cho nút Xóa */
+.icon2 {
+    color: #dc3545; /* Đỏ */
+}
+
+/* Chỉnh kích thước và căn giữa nút xóa */
+.icon2 {
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+
+.button:focus, .button:active {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Màu xanh dương cho nút Duyệt */
+.approve {
+    background-color: #007bff; /* Xanh dương */
+    color: #fff; /* Màu chữ trắng */
+}
+
+/* Màu cam cho nút Tiến hành mượn */
+.borrow {
+    background-color: #fd7e14; /* Cam */
+    color: #fff; /* Màu chữ trắng */
+}
+
+/* Màu xanh lá cho nút Trả */
+.returned {
+    background-color: #28a745; /* Xanh lá */
+    color: #fff; /* Màu chữ trắng */
+}
+
+/* Màu đỏ cho nút Xóa */
+.icon2 {
+    color: #dc3545; /* Đỏ */
+}
+
+
+.returned-action {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.status-cell button {
-    
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+.returned-action p {
+    margin-right: 10px; /* Để tạo khoảng cách giữa văn bản "Đã trả" và nút xóa */
 }
 
-.status-cell .borrowed {
-    background-color: green;
-    color: white;
-}
-
-.status-cell .returned {
-    background-color: red;
-    color: white;
-}
 
 ::-webkit-scrollbar {
     width: 6px;

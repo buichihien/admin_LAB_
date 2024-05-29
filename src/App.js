@@ -48,10 +48,9 @@ const App = () => {
                             path="/NewDevice"
                             element={<NewDevice />}
                         />
-
                         <Route
                             path="/borrowDevice"
-                            element={<BorrowDevice/>}
+                            element={<BorrowDevice />}
                         />
                         {/* Personnel */}
                         <Route

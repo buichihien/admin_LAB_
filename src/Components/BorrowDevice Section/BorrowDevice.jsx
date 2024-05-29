@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./borrow.css";
 import { FcSearch } from "react-icons/fc";
 import { RiChatDeleteFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -9,6 +8,7 @@ import { db } from "../../firebase";
 const BorrowDevice = () => {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
+    const [activeButton, setActiveButton] = useState('yc');
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Borrow"), (snapshot) => {
@@ -38,47 +38,64 @@ const BorrowDevice = () => {
         await deleteDoc(deleteVal);
     };
 
+    const handleApprove = async (id) => {
+        const borrowRef = doc(db, "Borrow", id);
+        await updateDoc(borrowRef, { status: "Đã duyệt" });
+    };
+
+    const handleBorrow = async (borrowData) => {
+        const borrowRef = doc(db, "Borrow", borrowData.id);
+        await updateDoc(borrowRef, { status: "Đang mượn" });
+    };
+
     const handleReturn = async (borrowData) => {
         const borrowRef = doc(db, "Borrow", borrowData.id);
-        const deviceQuery = await getDocs(collection(db, "Device"));
-        const deviceData = deviceQuery.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const device = deviceData.find(item => item.devicename === borrowData.deviceName);
-
-        if (device) {
-            const deviceRef = doc(db, "Device", device.id);
-            await updateDoc(deviceRef, { quantity: device.quantity + borrowData.quantity });
-        }
-
         await updateDoc(borrowRef, { status: "Đã trả" });
+    };
+
+    const handleButtonClick = (buttonName) => {
+        setActiveButton(buttonName);
     };
 
     return (
         <div className="mainContent">
             <div className="top">
                 <div className="searchBar flex">
-                    <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)} />
+                    <input type="text" placeholder="Tìm kiếm người dùng" onChange={(e) => setSearch(e.target.value)} />
                     <FcSearch className="icon" />
                 </div>
-                <div><button><Link to="/bookingRoom">Add Booking</Link></button></div>
+                <div className="buttons">
+                    <button className={`button yc ${activeButton === 'yc' ? 'active' : ''}`} onClick={() => handleButtonClick('yc')}>Yêu cầu</button>
+                    <button className={`button ddy ${activeButton === 'ddy' ? 'active' : ''}`} onClick={() => handleButtonClick('ddy')}>Đã duyệt</button>
+                    <button className={`button dmg ${activeButton === 'dmg' ? 'active' : ''}`} onClick={() => handleButtonClick('dmg')}>Đang mượn</button>
+                    <button className={`button dtr ${activeButton === 'dtr' ? 'active' : ''}`} onClick={() => handleButtonClick('dtr')}>Đã trả</button>
+                </div>
+
             </div>
 
             <div className="header_fixed">
                 <table>
                     <thead>
                         <tr>
-                            <th>S No.</th>
-                            <th>User Name</th>
-                            <th>Class</th>
+                            <th>STT</th>
+                            <th>Tên người dùng</th>
+                            <th>Lớp</th>
                             <th>MSSV</th>
-                            <th>Name device</th>
-                            <th>Quantity</th>
-                            <th>Time</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>Tên thiết bị</th>
+                            <th>Số lượng</th>
+                            <th>Thời gian</th>
+                            <th>Ngày</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.filter((data) => {
+                            if (activeButton === 'yc') return data.status === "Yêu cầu";
+                            if (activeButton === 'ddy') return data.status === "Đã duyệt";
+                            if (activeButton === 'dmg') return data.status === "Đang mượn";
+                            if (activeButton === 'dtr') return data.status === "Đã trả";
+                            return true;
+                        }).filter((data) => {
                             return search.toLowerCase() === ''
                                 ? data
                                 : data.deviceName.toLowerCase().includes(search);
@@ -94,28 +111,40 @@ const BorrowDevice = () => {
                                     <td>{data.time}</td>
                                     <td>{data.date}</td>
                                     <td className="status-cell">
-                                        <div>
-                                            {data.status === "Đã mượn" ? (
-                                                <button
-                                                    className="borrowed"
-                                                    onClick={() => handleReturn(data)}
-                                                >
-                                                    Đang mượn
+                                        {data.status === "Yêu cầu" && (
+                                            <button
+                                                className="approve"
+                                                onClick={() => handleApprove(data.id)}
+                                            >
+                                                Duyệt
+                                            </button>
+                                        )}
+                                        {data.status === "Đã duyệt" && (
+                                            <button
+                                                className="borrow"
+                                                onClick={() => handleBorrow(data)}
+                                            >
+                                                Tiến hành mượn
+                                            </button>
+                                        )}
+                                        {data.status === "Đang mượn" && (
+                                            <button
+                                                className="returned"
+                                                onClick={() => handleReturn(data)}
+                                            >
+                                                Trả
+                                            </button>
+                                        )}
+                                        {data.status === "Đã trả" && (
+                                            <div className="returned-action">
+                                                <p>Đã trả</p>
+                                                <button onClick={() => handleDelete(data.id)}>
+                                                    <RiChatDeleteFill className="icon2" />
                                                 </button>
-                                            ) : (
-                                                <button
-                                                    className="returned"
-                                                    onClick={() => handleReturn(data)}
-                                                >
-                                                    Đã trả
-                                                </button>
-                                            )}
-                                        </div>
-                                        <button onClick={() => handleDelete(data.id)}>
-                                            <RiChatDeleteFill className="icon2" />
-                                        </button>
-                                    </td>
+                                            </div>
+                                        )}
 
+                                    </td>
                                 </tr>
                             )
                         })}
@@ -123,7 +152,7 @@ const BorrowDevice = () => {
                 </table>
             </div>
         </div>
-    )
+    );
 }
 
 export default BorrowDevice;
