@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FcSearch } from "react-icons/fc";
 import { RiChatDeleteFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
-import { collection, deleteDoc, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc, addDoc } from "firebase/firestore";
+import { format } from "date-fns";
 import { db } from "../../firebase";
 
 const BorrowDevice = () => {
@@ -14,15 +14,20 @@ const BorrowDevice = () => {
         const unsub = onSnapshot(collection(db, "Borrow"), (snapshot) => {
             let list = [];
             snapshot.docs.forEach((doc) => {
-                list.push({ id: doc.id, ...doc.data() });
-            });
-            list.sort((a, b) => {
-                const dateComparison = a.date.localeCompare(b.date);
-                if (dateComparison !== 0) {
-                    return dateComparison;
+                const data = doc.data();
+                if (data.date && data.time) {
+                    list.push({ id: doc.id, ...data });
                 }
-                return a.time.localeCompare(b.time);
             });
+            if (list.length > 0) {
+                list.sort((a, b) => {
+                    const dateComparison = a.date.localeCompare(b.date);
+                    if (dateComparison !== 0) {
+                        return dateComparison;
+                    }
+                    return a.time.localeCompare(b.time);
+                });
+            }
             setData(list);
         },
             (err) => {
@@ -40,21 +45,62 @@ const BorrowDevice = () => {
 
     const handleApprove = async (id) => {
         const borrowRef = doc(db, "Borrow", id);
-        await updateDoc(borrowRef, { status: "Đã duyệt" });
+        const borrowDoc = await getDoc(borrowRef);
+        const borrowData = borrowDoc.data();
+
+        const now = new Date();
+        const currentDate = format(now, "dd-MM-yyyy");
+        const currentTime = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+        await updateDoc(borrowRef, {
+            status: "Đã duyệt",
+            approvedDateTime: `${currentDate} ${currentTime}`,
+            requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
+        });
     };
 
-    const handleBorrow = async (borrowData) => {
-        const borrowRef = doc(db, "Borrow", borrowData.id);
-        await updateDoc(borrowRef, { status: "Đang mượn" });
+    const handleBorrow = async (id) => {
+        const borrowRef = doc(db, "Borrow", id);
+        const borrowDoc = await getDoc(borrowRef);
+        const borrowData = borrowDoc.data();
+
+        const now = new Date();
+        const currentDate = format(now, "dd-MM-yyyy");
+        const currentTime = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+        await updateDoc(borrowRef, {
+            status: "Đang mượn",
+            borrowingDateTime: `${currentDate} ${currentTime}`,
+            approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
+            requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
+        });
     };
 
-    const handleReturn = async (borrowData) => {
-        const borrowRef = doc(db, "Borrow", borrowData.id);
-        await updateDoc(borrowRef, { status: "Đã trả" });
+    const handleReturn = async (id) => {
+        const borrowRef = doc(db, "Borrow", id);
+        const borrowDoc = await getDoc(borrowRef);
+        const borrowData = borrowDoc.data();
+
+        const now = new Date();
+        const currentDate = format(now, "dd-MM-yyyy");
+        const currentTime = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+        await updateDoc(borrowRef, {
+            status: "Đã trả",
+            returnedDateTime: `${currentDate} ${currentTime}`,
+            borrowingDateTime: `${borrowData.borrowingDate} ${borrowData.borrowingTime}`,
+            approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
+            requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
+        });
     };
 
     const handleButtonClick = (buttonName) => {
         setActiveButton(buttonName);
+    };
+
+    // Hàm lọc dữ liệu dựa trên trạng thái của yêu cầu
+    const filterDataByStatus = (status) => {
+        return data.filter(item => item.status === status);
     };
 
     return (
@@ -70,7 +116,6 @@ const BorrowDevice = () => {
                     <button className={`button dmg ${activeButton === 'dmg' ? 'active' : ''}`} onClick={() => handleButtonClick('dmg')}>Đang mượn</button>
                     <button className={`button dtr ${activeButton === 'dtr' ? 'active' : ''}`} onClick={() => handleButtonClick('dtr')}>Đã trả</button>
                 </div>
-
             </div>
 
             <div className="header_fixed">
@@ -82,72 +127,103 @@ const BorrowDevice = () => {
                             <th>Lớp</th>
                             <th>MSSV</th>
                             <th>Tên thiết bị</th>
-                            <th>Số lượng</th>
+                            <th>Seri</th>
                             <th>Thời gian</th>
-                            <th>Ngày</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.filter((data) => {
-                            if (activeButton === 'yc') return data.status === "Yêu cầu";
-                            if (activeButton === 'ddy') return data.status === "Đã duyệt";
-                            if (activeButton === 'dmg') return data.status === "Đang mượn";
-                            if (activeButton === 'dtr') return data.status === "Đã trả";
-                            return true;
-                        }).filter((data) => {
-                            return search.toLowerCase() === ''
-                                ? data
-                                : data.deviceName.toLowerCase().includes(search);
-                        }).map((data, index) => {
-                            return (
-                                <tr key={data.id}>
-                                    <td>{index + 1}</td>
-                                    <td>{data.userName}</td>
-                                    <td>{data.userClass}</td>
-                                    <td>{data.userMSSV}</td>
-                                    <td>{data.deviceName}</td>
-                                    <td>{data.quantity}</td>
-                                    <td>{data.time}</td>
-                                    <td>{data.date}</td>
-                                    <td className="status-cell">
-                                        {data.status === "Yêu cầu" && (
-                                            <button
-                                                className="approve"
-                                                onClick={() => handleApprove(data.id)}
-                                            >
-                                                Duyệt
-                                            </button>
-                                        )}
-                                        {data.status === "Đã duyệt" && (
-                                            <button
-                                                className="borrow"
-                                                onClick={() => handleBorrow(data)}
-                                            >
-                                                Tiến hành mượn
-                                            </button>
-                                        )}
-                                        {data.status === "Đang mượn" && (
-                                            <button
-                                                className="returned"
-                                                onClick={() => handleReturn(data)}
-                                            >
-                                                Trả
-                                            </button>
-                                        )}
-                                        {data.status === "Đã trả" && (
-                                            <div className="returned-action">
-                                                <p>Đã trả</p>
-                                                <button onClick={() => handleDelete(data.id)}>
-                                                    <RiChatDeleteFill className="icon2" />
-                                                </button>
-                                            </div>
-                                        )}
+                        {activeButton === 'yc' && filterDataByStatus('Yêu cầu').map((filteredData, index) => (
+                            <tr key={filteredData.id}>
+                                <td>{index + 1}</td>
+                                <td>{filteredData.userName}</td>
+                                <td>{filteredData.userClass}</td>
+                                <td>{filteredData.userMSSV}</td>
+                                <td>{filteredData.deviceName}</td>
+                                <td>{filteredData.seri}</td>
+                                <td>{`${filteredData.date} ${filteredData.time}`}</td>
+                                <td className="status-cell">
+                                    <button className="approve" onClick={() => handleApprove(filteredData.id)}>
+                                        Duyệt
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
 
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                        {activeButton === 'ddy' && filterDataByStatus('Đã duyệt').map((filteredData, index) => (
+                            <tr key={filteredData.id}>
+                                <td>{index + 1}</td>
+                                <td>{filteredData.userName}</td>
+                                <td>{filteredData.userClass}</td>
+                                <td>{filteredData.userMSSV}</td>
+                                <td>{filteredData.deviceName}</td>
+                                <td>{filteredData.seri}</td>
+                                <td>
+                                    <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
+                                    <div>Đã duyệt: {filteredData.approvedDateTime}</div>
+                                </td>
+                                <td className="status-cell">
+                                    <button className="borrow" onClick={() => handleBorrow(filteredData.id)}>
+                                        Tiến hành mượn
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+
+
+{activeButton === 'dmg' && filterDataByStatus('Đang mượn').map((filteredData, index) => (
+    <tr key={filteredData.id}>
+        <td>{index + 1}</td>
+        <td>{filteredData.userName}</td>
+        <td>{filteredData.userClass}</td>
+        <td>{filteredData.userMSSV}</td>
+        <td>{filteredData.deviceName}</td>
+        <td>{filteredData.seri}</td>
+        <td>
+            <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
+            {filteredData.approvedDateTime && (
+                <div>Đã duyệt: {new Date(filteredData.approvedDateTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
+            )}
+            <div>Đã mượn: {filteredData.borrowingDateTime}</div>
+        </td>
+        <td className="status-cell">
+            <button className="returned" onClick={() => handleReturn(filteredData.id)}>
+                Trả
+            </button>
+        </td>
+    </tr>
+))}
+
+
+
+
+
+                        {activeButton === 'dtr' && filterDataByStatus('Đã trả').map((filteredData, index) => (
+                            <tr key={filteredData.id}>
+                                <td>{index + 1}</td>
+                                <td>{filteredData.userName}</td>
+                                <td>{filteredData.userClass}</td>
+                                <td>{filteredData.userMSSV}</td>
+                                <td>{filteredData.deviceName}</td>
+                                <td>{filteredData.seri}</td>
+                                <td>
+                                    <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
+                                    <div>Đã duyệt: {filteredData.approvedDateTime}</div>
+                                    <div>Đã mượn: {filteredData.borrowingDateTime}</div>
+                                    <div>Đã trả: {filteredData.returnedDateTime}</div>
+                                </td>
+                                <td className="status-cell">
+                                    <div className="returned-action">
+                                        <button onClick={() => handleDelete(filteredData.id)}>
+                                            <RiChatDeleteFill className="icon2" />
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+
+
+
                     </tbody>
                 </table>
             </div>
