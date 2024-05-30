@@ -31,12 +31,16 @@ const BorrowDevice = () => {
                     list.push({ id: doc.id, ...borrowData });
                 }
             });
+    
+            list = list.filter(item => item.date && item.time); // Lọc các mục có date và time được định nghĩa
+    
             list.sort((a, b) => {
-                const dateComparison = a.date.localeCompare(b.date);
+                // Kiểm tra xem date và time có tồn tại không trước khi sử dụng localeCompare
+                const dateComparison = (a.date && b.date) ? a.date.localeCompare(b.date) : 0;
                 if (dateComparison !== 0) {
                     return dateComparison;
                 }
-                return a.time.localeCompare(b.time);
+                return (a.time && b.time) ? a.time.localeCompare(b.time) : 0;
             });
             setData(list);
         },
@@ -44,11 +48,12 @@ const BorrowDevice = () => {
                 console.log(err);
             }
         );
-
+    
         return () => {
             unsub();
         };
     }, [userEmail]);
+    
 
     return (
         <div className="mainContent">
@@ -69,9 +74,7 @@ const BorrowDevice = () => {
                             <th>Class</th>
                             <th>MSSV</th>
                             <th>Name Device</th>
-                            <th>Quantity</th>
-                            <th>Time</th>
-                            <th>Date</th>
+                            <th>DateTime</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -86,9 +89,7 @@ const BorrowDevice = () => {
                                     <td>{borrow.userClass}</td>
                                     <td>{borrow.userMSSV}</td>
                                     <td>{borrow.deviceName}</td>
-                                    <td>{borrow.quantity}</td>
-                                    <td>{borrow.time}</td>
-                                    <td>{borrow.date}</td>
+                                    <td>{`${borrow.date} ${borrow.time}`}</td>
                                     <td>{borrow.status}</td>
                                 </tr>
                             );

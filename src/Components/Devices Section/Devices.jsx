@@ -9,7 +9,6 @@ const Devices = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState([]);
     const [userDetails, setUserDetails] = useState({ email: "", userName: "", userClass: "", userMSSV: "" });
-    const [borrowQuantities, setBorrowQuantities] = useState({});
     const valueData = collection(db, "Borrow");
 
     useEffect(() => {
@@ -56,37 +55,36 @@ const Devices = () => {
         };
     }, []);
 
-    const handleBorrow = async (productId) => {
-        const device = data.find(item => item.id === productId);
+    const handleBorrow = async (id) => {
+    const device = data.find(item => item.id === id);
+    if (device) {
+        const formattedDate = format(new Date(), "dd-MM-yyyy");
+        const formattedTime = new Date().toLocaleTimeString();
+        
+        // Sử dụng giá trị cục bộ thay vì sử dụng userDetails trực tiếp
+        const { email, userName, userClass, userMSSV } = userDetails;
 
-        const quantityToBorrow = parseInt(borrowQuantities[productId], 10);
-        if (!isNaN(quantityToBorrow) && quantityToBorrow > 0 && quantityToBorrow <= device.quantity) {
-            const formattedDate = format(new Date(), "dd-MM-yyyy");
-
-            try {
-                await addDoc(valueData, {
-                    userEmail: userDetails.email,
-                    userName: userDetails.userName,
-                    userClass: userDetails.userClass,
-                    userMSSV: userDetails.userMSSV,
-                    date: formattedDate,
-                    time: new Date().toLocaleTimeString(),
-                    deviceName: device.devicename,
-                    quantity: quantityToBorrow,
-                    status: "Yêu cầu" // Trạng thái mặc định khi yêu cầu được thêm vào
-                });
-
-                setBorrowQuantities(prevState => ({ ...prevState, [productId]: "" }));
-
-                console.log(`Borrowed ${quantityToBorrow} items from device with ID ${productId}`);
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            alert("Please enter a valid quantity to borrow.");
+        try {
+            await addDoc(valueData, {
+                userEmail: email,   
+                userName: userName,
+                userClass: userClass,
+                userMSSV: userMSSV,
+                date: formattedDate,
+                time: formattedTime, 
+                deviceName: device.devicename,
+                seri: device.seri,
+                status: "Yêu cầu" 
+            });
+        } catch (error) {
+            console.log(error);
         }
-    };
+    } else {
+        alert("This device is currently out of stock.");
+    }
+};
 
+    
 
     return (
         <div className="mainContent">
@@ -105,7 +103,6 @@ const Devices = () => {
                             <th>Image</th>
                             <th>DeviceName</th>
                             <th>Seri</th>
-                            <th>Quantity</th>
                             <th>BorrowDevice</th>
                         </tr>
                     </thead>
@@ -121,16 +118,8 @@ const Devices = () => {
                                     <td><img className="imgDevices" style={{ maxWidth: '100%', maxHeight: '400px', borderRadius: '0' }} src={data.img || "https://images.pexels.com/photos/14371564/pexels-photo-14371564.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"} /></td>
                                     <td>{data.devicename}</td>
                                     <td>{data.seri}</td>
-                                    <td>{data.quantity}</td>
                                     <td>
                                         <div className="form-container">
-                                            <input
-                                                className="form-input"
-                                                type="text"
-                                                placeholder="Quantity to Borrow"
-                                                value={borrowQuantities[data.id] || ""}
-                                                onChange={(e) => setBorrowQuantities(prevState => ({ ...prevState, [data.id]: e.target.value }))}
-                                            />
                                             <button
                                                 className="form-button"
                                                 onClick={() => handleBorrow(data.id)}
