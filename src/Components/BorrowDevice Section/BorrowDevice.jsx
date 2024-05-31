@@ -55,7 +55,7 @@ const BorrowDevice = () => {
         await updateDoc(borrowRef, {
             status: "Đã duyệt",
             approvedDateTime: `${currentDate} ${currentTime}`,
-            requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
+            // requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
         });
     };
 
@@ -71,8 +71,8 @@ const BorrowDevice = () => {
         await updateDoc(borrowRef, {
             status: "Đang mượn",
             borrowingDateTime: `${currentDate} ${currentTime}`,
-            approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
-            requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
+            // approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
+            // requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
         });
     };
 
@@ -88,10 +88,10 @@ const BorrowDevice = () => {
         await updateDoc(borrowRef, {
             status: "Đã trả",
             returnedDateTime: `${currentDate} ${currentTime}`,
-            borrowingDateTime: `${borrowData.borrowingDate} ${borrowData.borrowingTime}`,
-            approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
-            requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
-        });
+            // borrowingDateTime: `${borrowData.borrowingDate} ${borrowData.borrowingTime}`,
+            // approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
+            // requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
+        });       
     };
 
     const handleButtonClick = (buttonName) => {
@@ -111,10 +111,10 @@ const BorrowDevice = () => {
                     <FcSearch className="icon" />
                 </div>
                 <div className="buttons">
-                    <button className={`button yc ${activeButton === 'yc' ? 'active' : ''}`} onClick={() => handleButtonClick('yc')}>Yêu cầu</button>
-                    <button className={`button ddy ${activeButton === 'ddy' ? 'active' : ''}`} onClick={() => handleButtonClick('ddy')}>Đã duyệt</button>
-                    <button className={`button dmg ${activeButton === 'dmg' ? 'active' : ''}`} onClick={() => handleButtonClick('dmg')}>Đang mượn</button>
-                    <button className={`button dtr ${activeButton === 'dtr' ? 'active' : ''}`} onClick={() => handleButtonClick('dtr')}>Đã trả</button>
+                    <button className={`button yc ${activeButton === 'yc' ? 'active' : ''}`} onClick={() => handleButtonClick('yc')}>Yêu cầu <span style={{ color: 'yellow' }}>({filterDataByStatus('Yêu cầu').length})</span></button>
+                    <button className={`button ddy ${activeButton === 'ddy' ? 'active' : ''}`} onClick={() => handleButtonClick('ddy')}>Đã duyệt <span style={{ color: 'yellow' }}>({filterDataByStatus('Đã duyệt').length})</span></button>
+                    <button className={`button dmg ${activeButton === 'dmg' ? 'active' : ''}`} onClick={() => handleButtonClick('dmg')}>Đang mượn <span style={{ color: 'yellow' }}>({filterDataByStatus('Đang mượn').length})</span></button>
+                    <button className={`button dtr ${activeButton === 'dtr' ? 'active' : ''}`} onClick={() => handleButtonClick('dtr')}>Đã trả <span style={{ color: 'yellow' }}>({filterDataByStatus('Đã trả').length})</span></button>
                 </div>
             </div>
 
@@ -143,7 +143,7 @@ const BorrowDevice = () => {
                                 <td>{filteredData.seri}</td>
                                 <td>{`${filteredData.date} ${filteredData.time}`}</td>
                                 <td className="status-cell">
-                                    <button className="approve" onClick={() => handleApprove(filteredData.id)}>
+                                    <button className="approve" style={{ fontSize: '15px', backgroundColor: 'aqua', borderRadius: '7px', padding: '10px' }} onClick={() => handleApprove(filteredData.id)}>
                                         Duyệt
                                     </button>
                                 </td>
@@ -163,7 +163,7 @@ const BorrowDevice = () => {
                                     <div>Đã duyệt: {filteredData.approvedDateTime}</div>
                                 </td>
                                 <td className="status-cell">
-                                    <button className="borrow" onClick={() => handleBorrow(filteredData.id)}>
+                                    <button className="borrow" style={{ fontSize: '15px', backgroundColor: 'aqua', borderRadius: '7px', padding: '10px' }} onClick={() => handleBorrow(filteredData.id)}>
                                         Tiến hành mượn
                                     </button>
                                 </td>
@@ -171,28 +171,29 @@ const BorrowDevice = () => {
                         ))}
 
 
-{activeButton === 'dmg' && filterDataByStatus('Đang mượn').map((filteredData, index) => (
-    <tr key={filteredData.id}>
-        <td>{index + 1}</td>
-        <td>{filteredData.userName}</td>
-        <td>{filteredData.userClass}</td>
-        <td>{filteredData.userMSSV}</td>
-        <td>{filteredData.deviceName}</td>
-        <td>{filteredData.seri}</td>
-        <td>
-            <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
-            {filteredData.approvedDateTime && (
-                <div>Đã duyệt: {new Date(filteredData.approvedDateTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
-            )}
-            <div>Đã mượn: {filteredData.borrowingDateTime}</div>
-        </td>
-        <td className="status-cell">
-            <button className="returned" onClick={() => handleReturn(filteredData.id)}>
-                Trả
-            </button>
-        </td>
-    </tr>
-))}
+                        {activeButton === 'dmg' && filterDataByStatus('Đang mượn').map((filteredData, index) => (
+                            <tr key={filteredData.id}>
+                                <td>{index + 1}</td>
+                                <td>{filteredData.userName}</td>
+                                <td>{filteredData.userClass}</td>
+                                <td>{filteredData.userMSSV}</td>
+                                <td>{filteredData.deviceName}</td>
+                                <td>{filteredData.seri}</td>
+                                <td>
+                                    <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
+                                    {/* {filteredData.approvedDateTime && (
+                                        <div>Đã duyệt: {new Date(filteredData.approvedDateTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
+                                    )} */}
+                                    <div>Đã duyệt: {filteredData.approvedDateTime}</div>
+                                    <div>Đã mượn: {filteredData.borrowingDateTime}</div>
+                                </td>
+                                <td className="status-cell">
+                                    <button className="returned" style={{ fontSize: '15px', backgroundColor: 'aqua', borderRadius: '7px', padding: '10px' }} onClick={() => handleReturn(filteredData.id)}>
+                                        Trả
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
 
 
 

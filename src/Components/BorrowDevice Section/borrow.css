@@ -270,4 +270,8 @@ td {
   .header_fixed thead th {
     font-size: 10px;
   }
+}
+.approve {
+  font-size: 15px;
+  background-color: #44b478;
 }/*# sourceMappingURL=borrow.css.map */

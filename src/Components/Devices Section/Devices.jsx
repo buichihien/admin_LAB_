@@ -106,7 +106,7 @@ const Devices = () => {
                             <th>Image</th>
                             <th>DeviceName</th>
                             <th>Seri</th>
-                            <th>Quantity</th>
+                            {/* <th>Quantity</th> */}
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -137,7 +137,7 @@ const Devices = () => {
                                     </td>
                                     <td>{item.devicename}</td>
                                     <td>{item.seri}</td>
-                                    <td>
+                                    {/* <td>
                                         <div className="quantity-input-container">
                                             <input
                                                 type="number"
@@ -150,7 +150,7 @@ const Devices = () => {
                                                 Lưu
                                             </button>
                                         </div>
-                                    </td>
+                                    </td> */}
                                     <td>
                                         <button onClick={() => handleDelete(item.id)}><RiChatDeleteFill className="icon2" /></button>
                                     </td>
