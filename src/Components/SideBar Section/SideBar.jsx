@@ -50,7 +50,7 @@ const SideBar = () => {
                         <Link to="/devices" className='menuLink flex'>
                             <AiFillAndroid className="icon" />
                             <span className="smallText">
-                                Devices
+                                Thiết bị
                             </span>
                         </Link>
 
@@ -60,7 +60,7 @@ const SideBar = () => {
                         <Link to="/borrowDevice" className='menuLink flex'>
                             <AiFillAndroid className="icon" />
                             <span className="smallText">
-                            BorrowDevice
+                            Danh sách mượn thiết bị
                             </span>
                         </Link>
 
@@ -70,7 +70,7 @@ const SideBar = () => {
                         <Link to="/room" className='menuLink flex'>
                             <SiGoogleclassroom className="icon" />
                             <span className="smallText">
-                                Book a classroom
+                                Danh sách mượn phòng
                             </span>
                         </Link>
 

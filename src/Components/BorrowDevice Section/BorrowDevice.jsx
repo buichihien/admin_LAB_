@@ -69,11 +69,13 @@ const BorrowDevice = () => {
                     <thead>
                         <tr>
                             <th>S No.</th>
-                            <th>User Name</th>
-                            <th>Class</th>
+                            <th>Họ và tên</th>
+                            <th>Lớp</th>
                             <th>MSSV</th>
-                            <th>Name Device</th>
-                            <th>DateTime</th>
+                            <th>Tên thiết bị</th>
+                            <th>Ngày mượn</th>
+                            <th>Ngày trả</th>
+                            <th>Thời gian gửi yêu cầu</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -88,6 +90,8 @@ const BorrowDevice = () => {
                                     <td>{borrow.userClass}</td>
                                     <td>{borrow.userMSSV}</td>
                                     <td>{borrow.deviceName}</td>
+                                    <td>{borrow.borrowDate}</td>
+                                    <td>{borrow.returnDate}</td>
                                     <td>{`${borrow.date} ${borrow.time}`}</td>
                                     <td>{borrow.status}</td>
                                 </tr>

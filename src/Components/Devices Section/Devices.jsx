@@ -4,6 +4,8 @@ import { FcSearch } from "react-icons/fc";
 import { collection, onSnapshot, updateDoc, doc, addDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { format } from "date-fns";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Devices = () => {
     const [search, setSearch] = useState("");
@@ -11,6 +13,10 @@ const Devices = () => {
     const [userDetails, setUserDetails] = useState({ email: "", userName: "", userClass: "", userMSSV: "" });
     const valueData = collection(db, "Borrow");
     const [borrowData, setBorrowData] = useState([]);
+    const [borrowDate, setBorrowDate] = useState(new Date());
+    const [returnDate, setReturnDate] = useState(new Date());
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedDevice, setSelectedDevice] = useState(null);
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Device"), (snapshot) => {
@@ -73,9 +79,11 @@ const Devices = () => {
 
     const handleBorrow = async (id) => {
         const device = data.find(item => item.id === id);
-        if (device) {
+        if (selectedDevice) {
             const formattedDate = format(new Date(), "dd-MM-yyyy");
             const formattedTime = new Date().toLocaleTimeString();
+            const formattedBorrowDate = format(borrowDate, "dd-MM-yyyy");
+            const formattedReturnDate = format(returnDate, "dd-MM-yyyy");
 
             // Sử dụng giá trị cục bộ thay vì sử dụng userDetails trực tiếp
             const { email, userName, userClass, userMSSV } = userDetails;
@@ -88,11 +96,16 @@ const Devices = () => {
                     userMSSV: userMSSV,
                     date: formattedDate,
                     time: formattedTime,
-                    deviceName: device.devicename,
-                    seri: device.seri,
+                    borrowDate: formattedBorrowDate,
+                    returnDate: formattedReturnDate,
+                    deviceName: selectedDevice.devicename,
+                    seri: selectedDevice.seri,
+                    // deviceName: device.devicename,
+                    // seri: device.seri,
                     status: "Yêu cầu"
                 });
-                alert("Đã mượn thiết bị !");
+                alert("Đã mượn thiết bị !!!");
+                setIsModalOpen(false);
             } catch (error) {
                 console.log(error);
             }
@@ -100,33 +113,10 @@ const Devices = () => {
         }
     };
 
-    // const getStatus = (device) => {
-    //     const borrowItem = borrowData.find(item => item.deviceName === device.devicename);
-    //     if (borrowItem) {
-    //         if (borrowItem.status === "Yêu cầu" || borrowItem.status === "Đã duyệt" || borrowItem.status === "Đang mượn") {
-    //             return "Đã mượn";
-    //         } else if (borrowItem.status === "Đã trả") {
-    //             return "Còn thiết bị";
-    //         }
-    //     }
-    //     return "Còn thiết bị";
-    // };
-
-    // const getStatus = (device) => {
-    //     const latestBorrowData = borrowData.reduce((latestData, item) => {
-    //         if (item.deviceName === device.devicename && (!latestData || new Date(item.date + " " + item.time) > new Date(latestData.date + " " + latestData.time))) {
-    //             return item;
-    //         }
-    //         return latestData;
-    //     }, null);
-
-    //     if (latestBorrowData) {
-    //         if (latestBorrowData.status === "Yêu cầu" || latestBorrowData.status === "Đã duyệt" || latestBorrowData.status === "Đang mượn") {
-    //             return "Đã mượn";
-    //         }
-    //     }
-    //     return "Còn thiết bị";
-    // };
+    const openModal = (device) => {
+        setSelectedDevice(device);
+        setIsModalOpen(true);
+    };
 
     const getStatus = (device) => {
         const hasRequestedOrApproved = borrowData.some(item => {
@@ -142,7 +132,7 @@ const Devices = () => {
         <div className="mainContent">
             <div className="top">
                 <div className="searchBar flex">
-                    <input type="text" placeholder="Search Devices" onChange={(e) => setSearch(e.target.value)} />
+                    <input type="text" placeholder="Tìm thiết bị" onChange={(e) => setSearch(e.target.value)} />
                     <FcSearch className="icon" />
                 </div>
             </div>
@@ -153,10 +143,10 @@ const Devices = () => {
                         <tr>
                             <th>S No.</th>
                             <th>Image</th>
-                            <th>DeviceName</th>
+                            <th>Tên thiết bị</th>
                             <th>Seri</th>
-                            <th>Status</th>
-                            <th>BorrowDevice</th>
+                            <th>Trạng thái</th>
+                            <th>Mượn thiết bị</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -191,11 +181,12 @@ const Devices = () => {
                                         <div className="form-container">
                                             <button
                                                 className="form-button"
-                                                onClick={() => handleBorrow(data.id)}
+                                                //onClick={() => handleBorrow(data.id)}
+                                                onClick={() => openModal(data)}
                                                 disabled={status === "Đã mượn"}
                                                 style={{ opacity: status === "Đã mượn" ? 0.2 : 1 }}
                                             >
-                                                Borrow
+                                                Mượn
                                             </button>
                                         </div>
                                     </td>
@@ -205,6 +196,24 @@ const Devices = () => {
                     </tbody>
                 </table>
             </div>
+
+            {isModalOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2 style={{ marginBottom: '15px' }}>Mượn thiết bị</h2>
+                        <div>
+                            <label>Ngày mượn: </label>
+                            <DatePicker selected={borrowDate} onChange={(date) => setBorrowDate(date)} />
+                        </div>
+                        <div>
+                            <label>Ngày trả: </label>
+                            <DatePicker selected={returnDate} onChange={(date) => setReturnDate(date)} />
+                        </div>
+                        <button className="form-button" onClick={handleBorrow}>Xác nhận</button>
+                        <button className="form-button2" onClick={() => setIsModalOpen(false)}>Hủy</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
