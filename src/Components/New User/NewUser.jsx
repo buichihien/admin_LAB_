@@ -133,7 +133,7 @@ const NewUser = () => {
                     </div>
 
                     <button className="formbold-btn" type="submit" disabled={per !== null && per < 100}>
-                        ADD
+                        Thêm
                     </button>
                 </form>
             </div>

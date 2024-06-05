@@ -53,7 +53,7 @@ const SideBar = () => {
                         <Link to="/user" className='menuLink flex'>
                             <BiSolidUser className="icon" />
                             <span className="smallText">
-                                Users
+                                Người dùng
                             </span>
                         </Link>
 
@@ -62,7 +62,7 @@ const SideBar = () => {
                         <Link to="/devices" className='menuLink flex'>
                             <AiFillAndroid className="icon" />
                             <span className="smallText">
-                                Devices
+                                Thiết bị
                             </span>
                         </Link>
 
@@ -71,7 +71,7 @@ const SideBar = () => {
                         <Link to="/borrowDevice" className='menuLink flex'>
                             <AiFillAndroid className="icon" />
                             <span className="smallText">
-                            BorrowDevice
+                            Danh sách mượn thiết bị
                             </span>
                         </Link>
 
@@ -80,7 +80,7 @@ const SideBar = () => {
                         <Link to="/personnel" className='menuLink flex'>
                             <BsFillFileEarmarkPersonFill className="icon" />
                             <span className="smallText">
-                                Personnel
+                                Nhân sự
                             </span>
                         </Link>
 
@@ -89,7 +89,7 @@ const SideBar = () => {
                         <Link to="/room" className='menuLink flex'>
                             <SiGoogleclassroom className="icon" />
                             <span className="smallText">
-                                Book a classroom
+                                Danh sách mượn phòng
                             </span>
                         </Link>
 

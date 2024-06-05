@@ -114,7 +114,7 @@ const BorrowDevice = () => {
                     <button className={`button yc ${activeButton === 'yc' ? 'active' : ''}`} onClick={() => handleButtonClick('yc')}>Yêu cầu <span style={{ color: 'yellow' }}>({filterDataByStatus('Yêu cầu').length})</span></button>
                     <button className={`button ddy ${activeButton === 'ddy' ? 'active' : ''}`} onClick={() => handleButtonClick('ddy')}>Đã duyệt <span style={{ color: 'yellow' }}>({filterDataByStatus('Đã duyệt').length})</span></button>
                     <button className={`button dmg ${activeButton === 'dmg' ? 'active' : ''}`} onClick={() => handleButtonClick('dmg')}>Đang mượn <span style={{ color: 'yellow' }}>({filterDataByStatus('Đang mượn').length})</span></button>
-                    <button className={`button dtr ${activeButton === 'dtr' ? 'active' : ''}`} onClick={() => handleButtonClick('dtr')}>Đã trả <span style={{ color: 'yellow' }}>({filterDataByStatus('Đã trả').length})</span></button>
+                    <button className={`button dtr ${activeButton === 'dtr' ? 'active' : ''}`} onClick={() => handleButtonClick('dtr')}>Lịch sử trả <span style={{ color: 'yellow' }}>({filterDataByStatus('Đã trả').length})</span></button>
                 </div>
             </div>
 
@@ -128,7 +128,9 @@ const BorrowDevice = () => {
                             <th>MSSV</th>
                             <th>Tên thiết bị</th>
                             <th>Seri</th>
-                            <th>Thời gian</th>
+                            <th>Ngày mượn</th>
+                            <th>Ngày trả</th>
+                            <th>Thời gian hoạt động</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -141,10 +143,15 @@ const BorrowDevice = () => {
                                 <td>{filteredData.userMSSV}</td>
                                 <td>{filteredData.deviceName}</td>
                                 <td>{filteredData.seri}</td>
+                                <td>{filteredData.borrowDate}</td>
+                                <td>{filteredData.returnDate}</td>
                                 <td>{`${filteredData.date} ${filteredData.time}`}</td>
                                 <td className="status-cell">
                                     <button className="approve" style={{ fontSize: '15px', backgroundColor: 'aqua', borderRadius: '7px', padding: '10px' }} onClick={() => handleApprove(filteredData.id)}>
                                         Duyệt
+                                    </button>
+                                    <button className="approve" style={{ fontSize: '15px', backgroundColor: '#e21c79', borderRadius: '7px', padding: '10px', marginLeft:'5px' }} onClick={() => handleApprove(filteredData.id)}>
+                                        Từ chối
                                     </button>
                                 </td>
                             </tr>
@@ -158,6 +165,8 @@ const BorrowDevice = () => {
                                 <td>{filteredData.userMSSV}</td>
                                 <td>{filteredData.deviceName}</td>
                                 <td>{filteredData.seri}</td>
+                                <td>{filteredData.borrowDate}</td>
+                                <td>{filteredData.returnDate}</td>
                                 <td>
                                     <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
                                     <div>Đã duyệt: {filteredData.approvedDateTime}</div>
@@ -179,6 +188,8 @@ const BorrowDevice = () => {
                                 <td>{filteredData.userMSSV}</td>
                                 <td>{filteredData.deviceName}</td>
                                 <td>{filteredData.seri}</td>
+                                <td>{filteredData.borrowDate}</td>
+                                <td>{filteredData.returnDate}</td>
                                 <td>
                                     <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
                                     {/* {filteredData.approvedDateTime && (
@@ -207,6 +218,8 @@ const BorrowDevice = () => {
                                 <td>{filteredData.userMSSV}</td>
                                 <td>{filteredData.deviceName}</td>
                                 <td>{filteredData.seri}</td>
+                                <td>{filteredData.borrowDate}</td>
+                                <td>{filteredData.returnDate}</td>
                                 <td>
                                     <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
                                     <div>Đã duyệt: {filteredData.approvedDateTime}</div>

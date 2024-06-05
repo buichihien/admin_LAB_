@@ -86,14 +86,14 @@ const Devices = () => {
                 <div className="searchBar flex">
                     <input
                         type="text"
-                        placeholder="Search Devices"
+                        placeholder="Tìm thiết bị"
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <FcSearch className="icon" />
                 </div>
                 <div>
                     <button>
-                        <Link to="/NewDevice">Add Device</Link>
+                        <Link to="/NewDevice">Thêm thiết bị</Link>
                     </button>
                 </div>
             </div>
@@ -104,7 +104,7 @@ const Devices = () => {
                         <tr>
                             <th>S No.</th>
                             <th>Image</th>
-                            <th>DeviceName</th>
+                            <th>Tên thiết bị</th>
                             <th>Seri</th>
                             {/* <th>Quantity</th> */}
                             <th>Action</th>

@@ -135,7 +135,7 @@ const Users = () => {
                     <input type="text" placeholder="Search User" onChange={(e) => setSearch(e.target.value)} />
                     <FcSearch className="icon" />
                 </div>
-                <div><button><Link to="/NewUser">Add User</Link></button></div>
+                <div><button><Link to="/NewUser">Thêm người dùng</Link></button></div>
             </div>
 
             <div className="header_fixed">
@@ -144,11 +144,11 @@ const Users = () => {
                         <tr>
                             <th>S No.</th>
                             <th>Image</th>
-                            <th>Full name</th>
+                            <th>Họ và tên</th>
                             <th>MSSV</th>
-                            <th>Class</th>
+                            <th>Lớp</th>
                             <th>Email</th>
-                            <th>Phone</th>
+                            <th>Số điện thoại</th>
                             <th>Action</th>
                         </tr>
                     </thead>
