@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FcSearch } from "react-icons/fc";
 import { RiChatDeleteFill } from "react-icons/ri";
-import { collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc, addDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { format } from "date-fns";
 import { db } from "../../firebase";
 
@@ -9,6 +9,9 @@ const BorrowDevice = () => {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
     const [activeButton, setActiveButton] = useState('yc');
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+    const [rejectReason, setRejectReason] = useState('');
+    const [rejectId, setRejectId] = useState(null);
 
     useEffect(() => {
         const unsub = onSnapshot(collection(db, "Borrow"), (snapshot) => {
@@ -55,7 +58,6 @@ const BorrowDevice = () => {
         await updateDoc(borrowRef, {
             status: "Đã duyệt",
             approvedDateTime: `${currentDate} ${currentTime}`,
-            // requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
         });
     };
 
@@ -71,8 +73,6 @@ const BorrowDevice = () => {
         await updateDoc(borrowRef, {
             status: "Đang mượn",
             borrowingDateTime: `${currentDate} ${currentTime}`,
-            // approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
-            // requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
         });
     };
 
@@ -88,17 +88,31 @@ const BorrowDevice = () => {
         await updateDoc(borrowRef, {
             status: "Đã trả",
             returnedDateTime: `${currentDate} ${currentTime}`,
-            // borrowingDateTime: `${borrowData.borrowingDate} ${borrowData.borrowingTime}`,
-            // approvedDateTime: `${borrowData.approvedDate} ${borrowData.approvedTime}`,
-            // requestDateTime: `${borrowData.requestDate} ${borrowData.requestTime}`
         });       
+    };
+
+    const handleReject = (id) => {
+        setRejectId(id);
+        setIsRejectModalOpen(true);
+    };
+
+    const handleRejectConfirm = async () => {
+        if (rejectId && rejectReason) {
+            const borrowRef = doc(db, "Borrow", rejectId);
+            await updateDoc(borrowRef, {
+                status: "Đã từ chối",
+                rejectReason,
+            });
+            setIsRejectModalOpen(false);
+            setRejectReason('');
+            setRejectId(null);
+        }
     };
 
     const handleButtonClick = (buttonName) => {
         setActiveButton(buttonName);
     };
 
-    // Hàm lọc dữ liệu dựa trên trạng thái của yêu cầu
     const filterDataByStatus = (status) => {
         return data.filter(item => item.status === status);
     };
@@ -150,7 +164,7 @@ const BorrowDevice = () => {
                                     <button className="approve" style={{ fontSize: '15px', backgroundColor: 'aqua', borderRadius: '7px', padding: '10px' }} onClick={() => handleApprove(filteredData.id)}>
                                         Duyệt
                                     </button>
-                                    <button className="approve" style={{ fontSize: '15px', backgroundColor: '#e21c79', borderRadius: '7px', padding: '10px', marginLeft:'5px' }} onClick={() => handleApprove(filteredData.id)}>
+                                    <button className="reject" style={{ fontSize: '15px', backgroundColor: '#e21c79', borderRadius: '7px', padding: '10px', marginLeft:'5px' }} onClick={() => handleReject(filteredData.id)}>
                                         Từ chối
                                     </button>
                                 </td>
@@ -172,13 +186,12 @@ const BorrowDevice = () => {
                                     <div>Đã duyệt: {filteredData.approvedDateTime}</div>
                                 </td>
                                 <td className="status-cell">
-                                    <button className="borrow" style={{ fontSize: '15px', backgroundColor: 'aqua', borderRadius: '7px', padding: '10px' }} onClick={() => handleBorrow(filteredData.id)}>
-                                        Tiến hành mượn
+                                    <button className="borrow" style={{ fontSize: '15px', backgroundColor: 'lightgreen', borderRadius: '7px', padding: '10px' }} onClick={() => handleBorrow(filteredData.id)}>
+                                        Mượn
                                     </button>
                                 </td>
                             </tr>
                         ))}
-
 
                         {activeButton === 'dmg' && filterDataByStatus('Đang mượn').map((filteredData, index) => (
                             <tr key={filteredData.id}>
@@ -192,23 +205,16 @@ const BorrowDevice = () => {
                                 <td>{filteredData.returnDate}</td>
                                 <td>
                                     <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
-                                    {/* {filteredData.approvedDateTime && (
-                                        <div>Đã duyệt: {new Date(filteredData.approvedDateTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
-                                    )} */}
                                     <div>Đã duyệt: {filteredData.approvedDateTime}</div>
-                                    <div>Đã mượn: {filteredData.borrowingDateTime}</div>
+                                    <div>Đang mượn: {filteredData.borrowingDateTime}</div>
                                 </td>
                                 <td className="status-cell">
-                                    <button className="returned" style={{ fontSize: '15px', backgroundColor: 'aqua', borderRadius: '7px', padding: '10px' }} onClick={() => handleReturn(filteredData.id)}>
+                                    <button className="return" style={{ fontSize: '15px', backgroundColor: '#3d80dc', borderRadius: '7px', padding: '10px' }} onClick={() => handleReturn(filteredData.id)}>
                                         Trả
                                     </button>
                                 </td>
                             </tr>
                         ))}
-
-
-
-
 
                         {activeButton === 'dtr' && filterDataByStatus('Đã trả').map((filteredData, index) => (
                             <tr key={filteredData.id}>
@@ -223,26 +229,36 @@ const BorrowDevice = () => {
                                 <td>
                                     <div>Đã yêu cầu: {filteredData.date} {filteredData.time}</div>
                                     <div>Đã duyệt: {filteredData.approvedDateTime}</div>
-                                    <div>Đã mượn: {filteredData.borrowingDateTime}</div>
+                                    <div>Đang mượn: {filteredData.borrowingDateTime}</div>
                                     <div>Đã trả: {filteredData.returnedDateTime}</div>
                                 </td>
-                                <td className="status-cell">
-                                    <div className="returned-action">
-                                        <button onClick={() => handleDelete(filteredData.id)}>
-                                            <RiChatDeleteFill className="icon2" />
-                                        </button>
-                                    </div>
+                                <td>
+                                    <RiChatDeleteFill style={{ color: 'red', fontSize: '25px' }} onClick={() => handleDelete(filteredData.id)} />
                                 </td>
                             </tr>
                         ))}
-
-
-
                     </tbody>
                 </table>
             </div>
+
+            {isRejectModalOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Lý do từ chối</h2>
+                        <textarea
+                            value={rejectReason}
+                            onChange={(e) => setRejectReason(e.target.value)}
+                            placeholder="Nhập lý do từ chối..."
+                        />
+                        <div className="modal-buttons">
+                            <button className="confirm" onClick={handleRejectConfirm}>Xác nhận</button>
+                            <button className="cancel" onClick={() => setIsRejectModalOpen(false)}>Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
-}
+};
 
 export default BorrowDevice;
