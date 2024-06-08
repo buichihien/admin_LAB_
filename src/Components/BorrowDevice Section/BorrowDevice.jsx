@@ -76,7 +76,8 @@ const BorrowDevice = () => {
                             <th>Ngày mượn</th>
                             <th>Ngày trả</th>
                             <th>Thời gian gửi yêu cầu</th>
-                            <th>Action</th>
+                            <th>Lý do từ chối</th> 
+                            <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +94,7 @@ const BorrowDevice = () => {
                                     <td>{borrow.borrowDate}</td>
                                     <td>{borrow.returnDate}</td>
                                     <td>{`${borrow.date} ${borrow.time}`}</td>
+                                    <td>{borrow.rejectReason || "-"}</td> 
                                     <td>{borrow.status}</td>
                                 </tr>
                             );
