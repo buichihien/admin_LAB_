@@ -1,297 +1,351 @@
-.mainContent {
-    width: 82%;
-    height: 100%;
-    padding: 2rem;
-    overflow: auto;
-}
+// .mainContent {
+//     width: 82%;
+//     height: 100%;
+//     padding: 2rem;
+//     overflow: auto;
+// }
 
-:root {
-    --PrimaryColor: hsl(94, 59%, 35%);
-    --HoverColor: #bdf094;
-    --paleGreen: hsl(96, 75%, 89%);
-    --whiteColor: hsl(0, 0%, 100%);
-    --blackColor: hsl(0, 0%, 18%);
-    --textColor: hsl(240, 1%, 48%);
-    --bgColor: hsl(220, 10%, 94%);
-    --greyText: rgb(190, 190, 190);
-    --inputColor: hsl(330, 12%, 97%);
-    --itemCardColor: hsl(120, 5%, 88%);
-    --itemCardHover: hsl(120, 27%, 87%);
+// :root {
+//     --PrimaryColor: hsl(94, 59%, 35%);
+//     --HoverColor: #bdf094;
+//     --paleGreen: hsl(96, 75%, 89%);
+//     --whiteColor: hsl(0, 0%, 100%);
+//     --blackColor: hsl(0, 0%, 18%);
+//     --textColor: hsl(240, 1%, 48%);
+//     --bgColor: hsl(220, 10%, 94%);
+//     --greyText: rgb(190, 190, 190);
+//     --inputColor: hsl(330, 12%, 97%);
+//     --itemCardColor: hsl(120, 5%, 88%);
+//     --itemCardHover: hsl(120, 27%, 87%);
 
-    /*Font  and Typography*/
-    --biggestFontSize: 2.5rem;
-    --h1FontSize: 1.5rem;
-    --h2FontSize: 1.25rem;
-    --h3FontSize: 1rem;
-    --normalFontSize: .938rem;
-    --smallFontSize: .913rem;
-    --smallestFontSize: .75rem;
-}
+//     /*Font  and Typography*/
+//     --biggestFontSize: 2.5rem;
+//     --h1FontSize: 1.5rem;
+//     --h2FontSize: 1.25rem;
+//     --h3FontSize: 1rem;
+//     --normalFontSize: .938rem;
+//     --smallFontSize: .913rem;
+//     --smallestFontSize: .75rem;
+// }
 
-.mainContent {
-    width: 82%;
-    height: 100%;
-    padding: 2rem;
-    overflow: auto;
-}
+// .mainContent {
+//     width: 82%;
+//     height: 100%;
+//     padding: 2rem;
+//     overflow: auto;
+// }
 
-/*# sourceMappingURL=users.css.map */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+// /*# sourceMappingURL=users.css.map */
+// @import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
 
-.top {
-    display: flex;
-    justify-content: space-between;
+// .top {
+//     display: flex;
+//     justify-content: space-between;
 
-    button {
-        border: none;
-        padding: 1rem 2rem;
-        background: var(--PrimaryColor);
-        color: var(--whiteColor);
-        border-radius: 5px;
-        gap: 1rem;
-        box-shadow: 0 2px 4px var(--inputColor);
-        border: 1px solid transparent;
-        &:hover {
-            background: var(--paleGreen);
-            color: var(--blackColor);
-            border: 1px solid var(--PrimaryColor);
-        }
-    }
-}
-
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.icon2 {
-    font-size: var(--biggestFontSize);
-    background: var(--whiteColor);
-    border-radius: 5px;
-    padding: 5px;
-    box-shadow: 0 2px 4px var(--inputColor);
-    color: var(--PrimaryColor);
-    // border: 1px solid transparent;
-    &:hover {
-        background: var(--paleGreen);
-        border: 1px solid var(--PrimaryColor);
-    }
-}
-
-.header_fixed {
-    max-height: 100vh;
-    width: 100%;
-    overflow: auto;
-    border: 1px solid #dddddd;
-    margin-top: 1rem;
-}
-
-.header_fixed thead th {
-    position: sticky;
-    top: 0;
-    background-color: black;
-    color: #e6e7e8;
-    font-size: 15px;
-}
-
-th,
-td {
-    border-bottom: 1px solid #dddddd;
-    padding: 10px 20px;
-    font-size: 14px;
-}
-
-td img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-    box-shadow: 0 2px 4px var(--itemCardColor);
-    margin-right: 1rem;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
-tr:nth-child(odd) {
-    background-color: #edeef1;
-}
-
-tr:hover td {
-    color: #44b478;
-    cursor: pointer;
-    background-color: #ffffff;
-}
-
-td button {
-    border: none;
-    // padding: 7px 20px;
-    gap: 1;
-    border-radius: 20px;
-    // background-color: black;
-    // color: #e6e7e8;
-}
+//     button {
+//         border: none;
+//         padding: 1rem 2rem;
+//         background: var(--PrimaryColor);
+//         color: var(--whiteColor);
+//         border-radius: 5px;
+//         gap: 1rem;
+//         box-shadow: 0 2px 4px var(--inputColor);
+//         border: 1px solid transparent;
+//         &:hover {
+//             background: var(--paleGreen);
+//             color: var(--blackColor);
+//             border: 1px solid var(--PrimaryColor);
+//         }
+//     }
+// }
 
 
-td {
-    text-align: center;
-}
+// table {
+//     width: 100%;
+//     border-collapse: collapse;
+// }
 
-.status-cell {
-    display: flex;
-    align-items: center;
-}
+// .icon2 {
+//     font-size: var(--biggestFontSize);
+//     background: var(--whiteColor);
+//     border-radius: 5px;
+//     padding: 5px;
+//     box-shadow: 0 2px 4px var(--inputColor);
+//     color: var(--PrimaryColor);
+//     // border: 1px solid transparent;
+//     &:hover {
+//         background: var(--paleGreen);
+//         border: 1px solid var(--PrimaryColor);
+//     }
+// }
 
-.status-cell span {
-    margin-right: 10px; /* Thêm khoảng cách giữa trạng thái và nút xóa */
-}
+// .header_fixed {
+//     max-height: 100vh;
+//     width: 100%;
+//     overflow: auto;
+//     border: 1px solid #dddddd;
+//     margin-top: 1rem;
+// }
 
-.action-cell {
-    display: flex;
-    justify-content: center; /* Căn giữa nội dung của cột "Action" */
-}
+// .header_fixed thead th {
+//     position: sticky;
+//     top: 0;
+//     background-color: black;
+//     color: #e6e7e8;
+//     font-size: 15px;
+// }
 
+// th,
+// td {
+//     border-bottom: 1px solid #dddddd;
+//     padding: 10px 20px;
+//     font-size: 14px;
+// }
 
-.searchBar {
-    padding: 1rem 2rem;
-    background: var(--whiteColor);
-    border-radius: 5px;
-    gap: 1rem;
-    box-shadow: 0 2px 4px var(--inputColor);
-    width: 250px;
+// td img {
+//     width: 40px;
+//     height: 40px;
+//     object-fit: cover;
+//     border-radius: 50%;
+//     box-shadow: 0 2px 4px var(--itemCardColor);
+//     margin-right: 1rem;
+// }
 
-    input {
-        border: none;
-        outline: none;
-        background: none;
-    }
+// tr:nth-child(even) {
+//     background-color: #dddddd;
+// }
 
-    .icon {
-        color: var(--textColor);
+// tr:nth-child(odd) {
+//     background-color: #edeef1;
+// }
 
-        &:hover {
-            color: var(--PrimaryColor);
-        }
-    }
-}
+// tr:hover td {
+//     color: #44b478;
+//     cursor: pointer;
+//     background-color: #ffffff;
+// }
 
-/* Màu xanh dương cho nút Yêu cầu */
-.button.yc {
-    background-color: #007bff; /* Xanh dương */
-    color: #fff; /* Màu chữ trắng */
-}
-
-/* Màu cam cho nút Đã duyệt */
-.button.ddy {
-    background-color: #fd7e14; /* Cam */
-    color: #fff; /* Màu chữ trắng */
-}
-
-/* Màu xanh lá cho nút Đang mượn */
-.button.dmg {
-    background-color: #28a745; /* Xanh lá */
-    color: #fff; /* Màu chữ trắng */
-}
-
-/* Màu đỏ cho nút Đã trả */
-.button.dtr {
-    background-color: #dc3545; /* Đỏ */
-    color: #fff; /* Màu chữ trắng */
-}
-
-/* Màu đỏ cho nút Xóa */
-.icon2 {
-    color: #dc3545; /* Đỏ */
-}
-
-/* Chỉnh kích thước và căn giữa nút xóa */
-.icon2 {
-    font-size: 20px;
-    vertical-align: middle;
-}
+// td button {
+//     border: none;
+//     // padding: 7px 20px;
+//     gap: 1;
+//     border-radius: 20px;
+//     // background-color: black;
+//     // color: #e6e7e8;
+// }
 
 
-.button:focus, .button:active {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
-}
+// td {
+//     text-align: center;
+// }
 
-/* Màu xanh dương cho nút Duyệt */
-.approve {
-    background-color: #007bff; /* Xanh dương */
-    color: #fff; /* Màu chữ trắng */
-}
+// .status-cell {
+//     display: flex;
+//     align-items: center;
+// }
 
-/* Màu cam cho nút Tiến hành mượn */
-.borrow {
-    background-color: #fd7e14; /* Cam */
-    color: #fff; /* Màu chữ trắng */
-}
+// .status-cell span {
+//     margin-right: 10px; /* Thêm khoảng cách giữa trạng thái và nút xóa */
+// }
 
-/* Màu xanh lá cho nút Trả */
-.returned {
-    background-color: #28a745; /* Xanh lá */
-    color: #fff; /* Màu chữ trắng */
-}
-
-/* Màu đỏ cho nút Xóa */
-.icon2 {
-    color: #dc3545; /* Đỏ */
-}
+// .action-cell {
+//     display: flex;
+//     justify-content: center; /* Căn giữa nội dung của cột "Action" */
+// }
 
 
-.returned-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+// .searchBar {
+//     padding: 1rem 2rem;
+//     background: var(--whiteColor);
+//     border-radius: 5px;
+//     gap: 1rem;
+//     box-shadow: 0 2px 4px var(--inputColor);
+//     width: 250px;
 
-.returned-action p {
-    margin-right: 10px; /* Để tạo khoảng cách giữa văn bản "Đã trả" và nút xóa */
-}
+//     input {
+//         border: none;
+//         outline: none;
+//         background: none;
+//     }
+
+//     .icon {
+//         color: var(--textColor);
+
+//         &:hover {
+//             color: var(--PrimaryColor);
+//         }
+//     }
+// }
+
+// /* Màu xanh dương cho nút Yêu cầu */
+// .button.yc {
+//     background-color: #007bff; /* Xanh dương */
+//     color: #fff; /* Màu chữ trắng */
+// }
+
+// /* Màu cam cho nút Đã duyệt */
+// .button.ddy {
+//     background-color: #fd7e14; /* Cam */
+//     color: #fff; /* Màu chữ trắng */
+// }
+
+// /* Màu xanh lá cho nút Đang mượn */
+// .button.dmg {
+//     background-color: #28a745; /* Xanh lá */
+//     color: #fff; /* Màu chữ trắng */
+// }
+
+// /* Màu đỏ cho nút Đã trả */
+// .button.dtr {
+//     background-color: #dc3545; /* Đỏ */
+//     color: #fff; /* Màu chữ trắng */
+// }
+
+// /* Màu đỏ cho nút Xóa */
+// .icon2 {
+//     color: #dc3545; /* Đỏ */
+// }
+
+// /* Chỉnh kích thước và căn giữa nút xóa */
+// .icon2 {
+//     font-size: 20px;
+//     vertical-align: middle;
+// }
 
 
-::-webkit-scrollbar {
-    width: 6px;
-}
+// .button:focus, .button:active {
+//     outline: none;
+//     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+// }
 
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
+// /* Màu xanh dương cho nút Duyệt */
+// .approve {
+//     background-color: #007bff; /* Xanh dương */
+//     color: #fff; /* Màu chữ trắng */
+// }
 
-::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
+// /* Màu cam cho nút Tiến hành mượn */
+// .borrow {
+//     background-color: #fd7e14; /* Cam */
+//     color: #fff; /* Màu chữ trắng */
+// }
 
-@media screen and (max-width: 900px) {
-    td{
-        padding: 8px 2px;
-        font-size: 15px;
-    }
+// /* Màu xanh lá cho nút Trả */
+// .returned {
+//     background-color: #28a745; /* Xanh lá */
+//     color: #fff; /* Màu chữ trắng */
+// }
 
-    th {
-        padding: 4px 2px;
-    }
-}
+// /* Màu đỏ cho nút Xóa */
+// .icon2 {
+//     color: #dc3545; /* Đỏ */
+// }
 
-@media screen and (max-width: 650px) {
-    td{
-        font-size: 10px;
-    }
 
-    th {
-        padding: 2px -2px;
+// .returned-action {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .returned-action p {
+//     margin-right: 10px; /* Để tạo khoảng cách giữa văn bản "Đã trả" và nút xóa */
+// }
+
+
+// ::-webkit-scrollbar {
+//     width: 6px;
+// }
+
+// ::-webkit-scrollbar-track {
+//     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+// }
+
+// ::-webkit-scrollbar-thumb {
+//     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+// }
+
+// @media screen and (max-width: 900px) {
+//     td{
+//         padding: 8px 2px;
+//         font-size: 15px;
+//     }
+
+//     th {
+//         padding: 4px 2px;
+//     }
+// }
+
+// @media screen and (max-width: 650px) {
+//     td{
+//         font-size: 10px;
+//     }
+
+//     th {
+//         padding: 2px -2px;
         
-    }
+//     }
 
-    .header_fixed thead th {
-        font-size: 10px;
-    }
+//     .header_fixed thead th {
+//         font-size: 10px;
+//     }
+// }
+
+// .approve{
+//     font-size: 15px;
+//     background-color: #44b478;
+// }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.approve{
-    font-size: 15px;
-    background-color: #44b478;
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-buttons .confirm {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-buttons .cancel {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }

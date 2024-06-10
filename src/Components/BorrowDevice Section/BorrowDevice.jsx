@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./borrow.css";
 import { FcSearch } from "react-icons/fc";
 import { RiChatDeleteFill } from "react-icons/ri";
 import { collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
@@ -242,7 +243,7 @@ const BorrowDevice = () => {
             </div>
 
             {isRejectModalOpen && (
-                <div className="modal">
+                <div className="modal-overlay">
                     <div className="modal-content">
                         <h2>Lý do từ chối</h2>
                         <textarea
